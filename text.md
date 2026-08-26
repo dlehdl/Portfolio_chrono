@@ -109,7 +109,7 @@ about:
     - Data Structure (Table)
   timeline:
     - title: 크로노 스튜디오
-      date: 2024.04 ~ Present
+      date: 2024.04 ~ 2026.06
       role: 기획 전투 PC팀
       desc: 버서커 클래스 스킬 기획 및 전투 매커니즘 설계, 전투 시스템 기획
     - title: 에스에이엠지 엔터테인먼트
