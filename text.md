@@ -466,7 +466,7 @@ weapons:
           - 적 처치 시 공격력 증가·방어력 감소 (하이 리스크 중첩)
         furyTrigger: 적 처치 후 일정 시간 타격 시 분노 생성량 증폭
         furyEffect: 처치 후 다음 액티브 스킬 분노 소모 0
-        furyRisk: '[관성] 발동 후 액티브 사용 전까지 회피 불가'
+        furyRisk: '[학살 관성] 발동 후 액티브 사용 전까지 회피 불가'
       B-2:
         name: 중압
         concept: 무력화 및 강타
@@ -1552,62 +1552,62 @@ weapons:
                 resource: 분노 전량
 passives:
   CS-T5-A1:
-    name: 아드레날린
+    name: 피의 강인
     summary: 추가 필요
     description: 피격 시 5초간 강인도 대폭 증가
     designerIntent: 피격 후 공격을 끊기지 않고 퍼부울 수 있도록 하는 중요 패시브
   CS-T5-A2:
-    name: 추가 필요
+    name: 분노의 맹약
     summary: 추가 필요
     description: 분노 50% 이상일 때 스킬 피해량 대폭 증가. 분노 50% 미만이면 방어력 20% 감소
     designerIntent: 분노 50% 유지를 성공 조건으로 걸고, 미만이면 방어를 깎아 게이지 운영을 강제
   CS-T5-B1:
-    name: 추가 필요
+    name: 무아지경
     summary: 추가 필요
     description: 액티브 스킬 사용 중 분노 소모 속도 가속화. 대신 액티브 사용 중 5회 이상 적중 시 분노 대폭 생성 및 피해량 50% 증가 (5중첩)
     designerIntent: 난전에서 타수를 유지하면 자원을 돌려받고 피해가 폭증하도록 처치 순환 유도
   CS-T5-B2:
-    name: 추가 필요
+    name: 광폭한 일격
     summary: 추가 필요
     description: 분노 100% 달성 시 다음 공격이 반드시 확정 경직. 단, 효과 발동 후 5초간 자신의 강인도도 대폭 감소
     designerIntent: 분노 100%에서 그로기를 확정하되, 직후 강인도가 감소되는 리스크로 대가 부여
   CS-T4-A1:
-    name: 공격 태세
+    name: '날카로운 광란 '
     summary: 추가 필요
     description: 분노 100% 도달 시 10초간 치명타 피해량 20% 증가, 대신 방어력 20% 추가 감소
     designerIntent: 패시브 광란과 조합하여 효과를 극대화하는 패시브
   CS-T4-A2:
-    name: 추가 필요
+    name: 속박
     summary: 추가 필요
     description: 적에게 CC 부여 시마다 분노 10 생성 및 공격력 20% 증가. 대신 자신의 스태미나 소모량 20% 증가
     designerIntent: CC 액티브 위주 운영을 유도하고, 평타·회피 비용을 올려 거리 통제에 투자하게 함
   CS-T4-B1:
-    name: 관성
+    name: 학살 관성
     summary: 처치 후 무소모
     description: 적을 처치한 후 다음 액티브 스킬이 분노를 소모하지 않음. 단, 액티브 사용 전까지 회피 불가
     designerIntent: 처치 직후 다음 스킬을 공짜로 만들되, 그 사이 회피를 막아 리스크를 둠
   CS-T4-B2:
-    name: 추가 필요
+    name: 광압
     summary: 추가 필요
     description: 분노 70% 이상일 때 모든 타격 경직치 20% 증가. 대신 회피 시 스태미나 소모량 20% 증가
     designerIntent: 분노 70% 이상에서 전 타격 경직을 키우고, 회피 비용을 올려 붙어서 때리게 함
   CS-T4-AS1:
-    name: 생기 흡수
+    name: 피의 환희
     summary: 추가 필요
     description: 치명타 발생 시마다 피해량 5% 증가, 생명력 3% 회복
     designerIntent: 다단히트로 치명타 발생 시 유리한 패시브
   CS-T4-AS2:
-    name: 추가 필요
+    name: 전투 개시
     summary: 추가 필요
     description: 특수액션 적중 후 기본 공격 피해량 20% 증가, 분노 생성량 20% 증가
     designerIntent: 특수액션 적중 후 평타를 통한 자원 수급량을 키워, 스테미나 부담이 큰 척력의 빈 구간을 메꿈
   CS-T4-BS1:
-    name: 추가 필요
+    name: 사슬의 학살
     summary: 추가 필요
     description: 체인 스킬 적중 시마다 피해량 5% 증가 (10중첩)
     designerIntent: '체인 적중이 쌓일수록 광역 피해가 커져 처치 속도를 가속화 '
   CS-T4-BS2:
-    name: 추가 필요
+    name: 연속 제압
     summary: 추가 필요
     description: 체인 스킬 적중 시마다 공격의 경직치 5% 증가 (10중첩)
     designerIntent: 체인 적중이 쌓일수록 경직이 커져 그로기 발생이 쉬워짐
@@ -1617,97 +1617,97 @@ passives:
     description: 분노 100% 도달 시 10초간 [광란]. 기본 공격의 사거리가 감소하는 대신 공격 속도 증가, 강인도 증가. 대신 초당 분노 소모량 10% 증가, 받는 피해 10% 증가
     designerIntent: '분노 100% 도달 시 기본 공격의 속도가 빨라져 순간적인 폭딜 가능. '
   CS-T3-A2:
-    name: 등가교환
+    name: 피의 거래
     summary: 추가 필요
     description: 분노 100% 도달 시 CC 상태 적에게 공격이 적중할 때마다 10% 추가 피해. 추가 피해 적중 시마다 자신의 강인도 5% 감소
     designerIntent: 분노를 100%로 유지할 때 이점을 주기 위한 패시브
   CS-T3-B1:
-    name: 추가 필요
+    name: '처치 가속 '
     summary: 추가 필요
     description: 적 처치 시 공격력 10% 증가, 대신 방어력 10% 감소 (5중첩)
     designerIntent: 처치할수록 공격이 세지고 방어가 깎여, 난전을 이어야 이득이 되도록 유도함
   CS-T3-B2:
-    name: 추가 필요
+    name: 압살
     summary: 추가 필요
     description: 기본 공격 경직치 20% 증가, 대신 스태미나 소모량도 20% 증가
     designerIntent: '평타 경직을 키우는 대신 스테미나를 더 쓰게 해, 무게를 싣는 만큼 기동력 감소 '
   CS-T3-AS1:
-    name: '넘치는 활력 '
+    name: 끓는 숨
     summary: 추가 필요
     description: 분노가 50% 이상일 때 스태미나 회복량 30% 증가
     designerIntent: 분노를 높게 가져갈 때 회피, 특수액션 사용에 유리함
   CS-T3-AS2:
-    name: '기술 숙련 '
+    name: 절제된 광기
     summary: 추가 필요
     description: 액티브 스킬 분노 소모량 15% 감소
     designerIntent: '분노 수급을 용이하게 해주는 패시브 '
   CS-T3-BS1:
-    name: 추가 필요
+    name: 불굴 난무
     summary: 추가 필요
     description: 분노가 50% 이상일 때 공격 적중마다 강인도 10% 강화 (5중첩)
     designerIntent: 분노를 높게 유지한 채 때릴수록 강인도가 쌓여 공격이 끊기지 않게 함
   CS-T3-BS2:
-    name: 추가 필요
+    name: 제압
     summary: 추가 필요
     description: 적 경직 시 분노 생성량 30% 증가
     designerIntent: 경직시킬수록 분노를 수급, 무력화와 수급을 같은 행동에 묶음
   CS-T2-A1:
-    name: '사냥 준비 '
+    name: 살의 예열
     summary: 추가 필요
     description: 특수액션 적중 후 5초간 치명타 확률 5% 증가
     designerIntent: '공격 전 특수액션 활용 유도 '
   CS-T2-A3:
-    name: '예리한 분노 '
+    name: 활력
     summary: 추가 필요
     description: 치명타 발생 시마다 분노 5 생성
     designerIntent: '치명타 발생 -> 자원 수급으로 순환 유도 '
   CS-T2-A2:
-    name: '무방비'
+    name: 제압의 숨
     summary: 추가 필요
     description: '적에게 CC 부여 후 5초간 분노 생성량 20% 증가 '
     designerIntent: 'CC 부여 시 자원 수급 속도 증가 '
   CS-T2-A4:
-    name: 완충
+    name: 분노 유지
     summary: 추가 필요
     description: 분노 50% 이상이면 초당 분노 소모량 감소
     designerIntent: '분노를 높은 상태로 유지하기 쉽게 도움을 주는 패시브 '
   CS-T2-B1:
-    name: 추가 필요
+    name: '전투 호흡 '
     summary: 추가 필요
     description: '적에게 공격 적중 시마다 스태미나 5 회복. '
     designerIntent: 한 방이 아니라 다수 적중일 때 의미가 있으므로 난전을 유도
   CS-T2-B3:
-    name: 추가 필요
+    name: '전투의 흥분 '
     summary: 추가 필요
     description: 적 처치 후 5초간 모든 공격 적중 시마다 분노 5 생성
     designerIntent: '처치 후 짧은 시간 타격마다 분노가 생성되므로 계속 몰아치는 플레이 유도 '
   CS-T2-B2:
-    name: 추가 필요
+    name: 넘치는 분노
     summary: 추가 필요
     description: 특수액션으로 생성하는 분노 수치 30% 증가
     designerIntent: '특수액션 수급을 키워 해당 빌드 내 특수액션 운용 증가 유도 '
   CS-T2-B4:
-    name: 추가 필요
+    name: 내려치는 사슬
     summary: 추가 필요
     description: 적을 경직시킬 때 무력화 저항력 15% 감소 디버프 부여
     designerIntent: '경직할 때마다 무력화 저항을 깎아, 같은 대상을 계속 공격하도록 유도 '
   DA-T5-A1:
-    name: 추가 필요
+    name: 투신 회귀
     summary: 추가 필요
     description: '[투신] 종료 시 공격 횟수만큼 분노 최대 6 리턴. 대신 [투신] 유지 중 분노 지속 소모량 12% 증가. [투신] 유지시간 12초로 연장'
     designerIntent: '[투신] 중 더 많이 때릴수록 종료 후 분노를 돌려받는 순환 유도'
   DA-T5-A2:
-    name: 추가 필요
+    name: 투신 흡혈
     summary: 추가 필요
     description: '[투신] 종료 시 공격 횟수만큼 생명력 최대 4% 리턴. [투신] 유지 중 분노 지속 소모량 15% 감소. 대신 [투신] 중 피격 시 분노 8 추가 소모'
     designerIntent: '[투신] 소모를 줄여 유지를 돕되, 피격 시 분노 추가 소모로 리스크 부여'
   DA-T5-B1:
-    name: 추가 필요
+    name: 극한의 혈투
     summary: 추가 필요
     description: '[광기] 최대 중첩 시 공격력과 받는 피해 모두 45% 증가'
     designerIntent: '[광기] 최대에서 화력과 받는 피해를 동시에 극대화하는 패시브'
   DA-T5-B2:
-    name: 한계 돌파
+    name: 치명적인 도살
     summary: 치명타 순환
     description: 치명타 발생 시 스태미나·분노 8% 회복, 25% 확률로 [광기] 1 추가 획득
     designerIntent: 치명타 발생 -> 자원·광기 수급으로 콤보 순환 유도
@@ -1719,109 +1719,109 @@ passives:
       25% 감소, 이동 속도 15% 감소
     designerIntent: '[광기] 전량 소모 시 폭주, 만료 시 탈진으로 투신 전 사용을 유도'
   DA-T4-A2:
-    name: 웅크린 도약
+    name: 광기 도약
     summary: 회피 충전
     description: >-
       [광기] 상태에서 기본 공격 적중 시 3초간 다음 공격에 경직 부여치 25% 보너스, 대신 경직 저항 25% 감소. [광기] 상태에서 회피 공격을 충전해서 사용 가능. 충전 완료 시 회피 공격 돌진 거리
       40% 증가
     designerIntent: '[광기] 유지 중 평타 경직을 키우고, 충전 회피로 거리를 다시 잡게 함'
   DA-T4-B1:
-    name: 추가 필요
+    name: '혈공 '
     summary: 추가 필요
     description: '[광기] 상태에서 특수액션 돌진의 후속타 연계 가능. 후속타는 공중에서 도끼를 내리찍어 210% 피해'
     designerIntent: 특수액션 돌진 후 후속타를 넣어 회피-돌진 연계 유도
   DA-T4-B2:
-    name: 추가 필요
+    name: 연쇄 도살
     summary: 추가 필요
     description: 체인 공격 사용마다 치명타 피해 6% 증가 (최대 10중첩). 단, 스킬 분노 소모량 12% 증가
     designerIntent: 체인 적중이 쌓일수록 치명타 피해가 커져 콤보 유지 유도
   DA-T4-AS1:
-    name: 추가 필요
+    name: 끓어오르는 일격
     summary: 추가 필요
     description: 분노량이 50% 이상일 때 기본 공격 피해량 25% 증가
     designerIntent: 분노를 높게 가져갈 때 평타 화력이 커지는 패시브
   DA-T4-AS2:
-    name: 추가 필요
+    name: 분노의 숨
     summary: 추가 필요
     description: '[광기] 상태에서 연속 공격 시마다 분노 생성량 8% 증가 (5중첩)'
     designerIntent: '[광기] 상태에서 연속 공격할수록 분노 수급 가속 유도'
   DA-T4-BS1:
-    name: 찰나의 기회
+    name: 고통 전환
     summary: 피격 보상
     description: 특수액션 중 피격 시 4초간 다음 스킬 피해량 70% 증가
     designerIntent: 특수액션 중 피격을 다음 스킬 피해로 전환하는 패시브
   DA-T4-BS2:
-    name: 추가 필요
+    name: 예리한 도끼
     summary: 추가 필요
     description: '[광기] 소모 시마다 치명타 확률 8% 증가 (최대 5중첩)'
     designerIntent: '[광기] 소모 시 치명타 확률을 올려 후딜 캔슬을 보상'
   DA-T3-A1:
-    name: 추가 필요
+    name: 피의 광기
     summary: 추가 필요
     description: 생명력이 50% 이하일 때 돌진 중 피격 시 [광기] 1회 추가 획득
     designerIntent: 생명력이 낮을 때 돌진 피격으로 광기를 더 쌓게 유도
   DA-T3-A2:
-    name: 추가 필요
+    name: 살인 돌격
     summary: 추가 필요
     description: 도끼 적중 후 다음 특수액션 돌진이 강화되어 180% 피해, 경직 부여치 25% 증가. 중간에 다른 스킬을 쓰면 효과 발동 안 함
     designerIntent: 도끼 적중 직후 돌진만 연결해야 강화되도록 연계를 강제
   DA-T3-B1:
-    name: 피의 혈투
+    name: 피의 돌진
     summary: 강화 회피 공격
     description: 공격 종료 후 1초 이내 전방 회피 시 강화 회피 공격 발동 (회피 판정). 적중 시 [광기] 1 획득
     designerIntent: 공격 직후 회피를 강화 회피 공격으로 바꿔, 회피를 공격으로 쓰게 함
   DA-T3-B2:
-    name: 추가 필요
+    name: 광기의 숨
     summary: 추가 필요
     description: 일반공격 3콤보 적중 시 [광기] 1스택 소모하여 스태미나 35% 즉시 회복
     designerIntent: 평타 3콤보에 광기 1스택을 태워 스태미나를 돌려받는 콤보 유지 유도
   DA-T3-AS1:
-    name: 추가 필요
+    name: 분노의 돌진
     summary: 추가 필요
     description: 특수액션 중 피격 시 얻는 분노 생성량 25% 증가
     designerIntent: 특수액션 중 피격 시 분노 수급을 키워 돌진 활용 유도
   DA-T3-AS2:
-    name: 추가 필요
+    name: 집착의 광기
     summary: 추가 필요
     description: 같은 적에게 공격 적중 시마다 35% 확률로 [광기] 획득
     designerIntent: 같은 적을 계속 때릴수록 광기 수급 유도
   DA-T3-BS1:
-    name: 추가 필요
+    name: 혈막
     summary: 추가 필요
     description: 특수액션 사용 중 [광기] 스택의 받는 피해 증가 패널티를 60% 상쇄
     designerIntent: 특수액션 중 광기 피격 패널티를 줄여 돌진으로 리스크를 상쇄하게 함
   DA-T3-BS2:
-    name: 추가 필요
+    name: 분노의 광기
     summary: 추가 필요
     description: '[광기] 상태에서 분노 생성량 25% 증가'
     designerIntent: '[광기] 상태에서 분노 수급을 키워 스택 유지를 도움'
   DA-T2-A1:
-    name: 추가 필요
+    name: 피의 분노
     summary: 추가 필요
     description: 생명력이 50% 이하일 때 5초간 매 타격마다 분노 6 생성
     designerIntent: '생명력이 낮을 때 타격마다 분노를 수급해 투신 하이 리스크 하이 리턴을 향한 발판 마련 '
   DA-T2-A2:
-    name: 추가 필요
+    name: 광격
     summary: 추가 필요
     description: 액티브 스킬 적중 시마다 18% 확률로 35% 추가 피해
     designerIntent: 액티브 적중 시 추가 피해로 주력기 화력 보조
   DA-T2-B1:
-    name: 추가 필요
+    name: 전투 호흡
     summary: 추가 필요
     description: 적중 시 25% 확률로 스태미나 15% 회복
     designerIntent: 적중 시 스태미나 회복으로 회피 공격 순환을 도움
   DA-T2-B2:
-    name: 추가 필요
+    name: 광기의 고통
     summary: 추가 필요
     description: 공격 중 피격 시 [광기] 1스택 획득 (내부 쿨타임 4초)
     designerIntent: 공격 중 피격 시 광기를 쌓아, 맞으면서 때리는 운영 유도
   DA-T2-AS1:
-    name: 대비
+    name: 달려드는 자
     summary: 피격 광기
     description: 피격으로 [광기] 획득 시 5초간 경직 저항 수치 25% 증가
     designerIntent: 피격으로 광기를 얻을 때 경직 저항을 주어 돌진 피격을 유도
   DA-T2-AS2:
-    name: 추가 필요
+    name: 광기의 잔숨
     summary: 추가 필요
     description: '[광기] 상태에서 회피 시 28% 확률로 스태미나 20% 즉시 회복'
     designerIntent: '[광기] 상태에서 회피 시 스태미나 회복으로 생존을 도움 '
@@ -1831,127 +1831,127 @@ passives:
     description: '현재 생명력 50% 이하일 때 피격 시 45% 확률로 생명력 12% 회복 '
     designerIntent: 생명력이 낮을 때 피격 시 회복으로 유지력을 보완
   DA-T2-BS2:
-    name: 추가 필요
+    name: 광기 흡혈
     summary: 추가 필요
     description: '[광기] 소모 시 생명력 4% 회복'
     designerIntent: '[광기] 소모 시 생명력 회복으로 후딜 캔슬에 유지력을 줌'
   BA-T5-A1:
-    name: 추가 필요
+    name: 부동심
     summary: 추가 필요
     description: 스킬 사용 중 분노가 자연 감소하지 않음. 대신 스태미나 회복 속도 25% 감소
     designerIntent: 분노 소모량을 최대한 적게 해준 뒤 일격을 준비하게 함
   BA-T5-A2:
-    name: 추가 필요
+    name: 무력한 포식자
     summary: 추가 필요
     description: 적을 경직·무력화한 후 5초간 타격마다 분노 8 생성. 대신 받는 피해 15% 증가
     designerIntent: '경직 상태에서 분노 수급을 최대한 하는 대신, 피해 증가로 리스크 부여 '
   BA-T5-B1:
-    name: 추가 필요
+    name: 광폭화
     summary: 추가 필요
     description: 분노 100%일 때 모든 충전형 공격이 사용 시 즉시 풀충전 공격으로 발동. 적중 후 5초간 분노 수급 불가
     designerIntent: '분노가 100%일 때 풀충전으로 공격 속도 증가, 이후 5초 공백으로 분노를 100%로 만들 타이밍을 고려하도록 함 '
   BA-T5-B2:
-    name: 추가 필요
+    name: 분노의 포화
     summary: 추가 필요
     description: 분노 100%일 때 기본 공격 피해량 28% 증가, 스태미나 소모량 25% 증가
     designerIntent: '분노 100 유지 중 평타 화력을 키우되 스태미나 부담으로 스킬과 섞어 공격을 이어가도록 함 '
   BA-T4-A1:
-    name: 추가 필요
+    name: 과잉 분노
     summary: 추가 필요
     description: 분노가 100을 초과해 증가할 때 매 타격마다 공격력 6% 증가 (10중첩). 단, 분노 50% 이하 시 받는 피해 22% 증가
     designerIntent: 분노 최대치를 100 너머로 밀어 올리게 하고, 미만이면 맞딜이 불리하도록 유도
   BA-T4-A2:
-    name: 추가 필요
+    name: 폭주
     summary: 추가 필요
     description: 공격 중 받는 피해량 12% 증가하는 대신, 피격 시 4초간 주는 피해량 38% 증가
     designerIntent: '맞으면서 때릴 때 리스크 증가하는 대신, 폭딜로 보상 '
   BA-T4-B1:
-    name: 찰나의 폭주
+    name: 즉각적인 응징
     summary: 충전 피격 폭주
     description: 1초 이상 충전 유지 중 피격 시 4초간 피해량 40% 증가 (공격 적중 후 효과 종료)
     designerIntent: 충전 중 피격을 폭딜로 보상해 맞아 주는 플레이 유도
   BA-T4-B2:
-    name: 추가 필요
+    name: 불굴의 투지
     summary: 추가 필요
     description: 분노 100%일 때 경직 면역. 단, 효과 적용 중 분노가 100% 미만으로 떨어지면 5초간 강인도 32% 감소
     designerIntent: '100을 유지해야만 면역이 켜지게 해 콤보 정지가 리스크로 작동하게 함 '
   BA-T4-AS1:
-    name: 분노 축적
+    name: 분노 상승
     summary: 100 이상 수급
     description: 현재 분노가 100 이상일 때 분노 생성량 28% 증가
     designerIntent: '초과 구간에서 수급을 가속해 분노 최대치를 확장한 후 분노 수급이 용이하도록 함 '
   BA-T4-AS2:
-    name: 추가 필요
+    name: 균열 확대
     summary: 추가 필요
     description: 경직된 대상을 공격할 때마다 무력화 게이지 감소 스탯 18% 증가
     designerIntent: '경직된 대상을 계속 공격하도록 유도 -> 무력화로 연계 '
   BA-T4-BS1:
-    name: 온전한 집중
+    name: 부동 자세
     summary: 충전 강인도
     description: 충전 중 강인도 28% 증가
     designerIntent: 충전 중 피격을 버틸 수 있게 해 응징 루프를 성립
   BA-T4-BS2:
-    name: 추가 필요
+    name: 파쇄 순환
     summary: 추가 필요
     description: 액티브 적중 후 사용하는 기본 공격 피해량 25% 증가. 5초 이내 공격을 이어갈 때마다 기본 공격으로 얻는 분노 3 증가 (최대 5중첩)
     designerIntent: 스킬 뒤 평타를 붙여 분노 100을 다시 채우게 유도
   BA-T3-A1:
-    name: 추가 필요
+    name: 상흔 축적
     summary: 추가 필요
     description: 액티브 사용 중 피격 시, 해당 스킬이 적중하면 최대 분노량 12% 증가 (최대 5중첩)
     designerIntent: 스킬 중 피격을 분노 최대치 증가로 바꿔 맞으면서 유지 유도
   BA-T3-A2:
-    name: 추가 필요
+    name: 상흔의 추격
     summary: 추가 필요
     description: 액티브 사용 중 피격 시, 2초 이내 다음 타격에 28% 추가 피해 (내부 쿨타임 없음)
     designerIntent: 피격 직후 추격을 강제해 순환이 끊기지 않게 함
   BA-T3-B1:
-    name: 추가 필요
+    name: '버티는 힘 '
     summary: 추가 필요
     description: 충전 중 피격 시마다 분노 12% 회복. 충전 1초당 분노 생성량 10% 증가
     designerIntent: 충전 시간을 수급 수단으로 만들어 맞아 주는 선택을 유도
   BA-T3-B2:
-    name: 추가 필요
+    name: 유지되는 분노
     summary: 추가 필요
     description: 분노 100% 달성 시 5초간 분노 자연 소모하지 않음. 대신 자신이 경직되면 분노 15 감소
     designerIntent: '분노 100을 유지할 수 있는 시간을 주되 경직될 때마다 분노가 감소하여 너무 쉽게 효과를 얻을 수 없도록 조정 '
   BA-T3-AS1:
-    name: 추가 필요
+    name: 강행 돌파
     summary: 추가 필요
     description: 분노 80 이상일 때 액티브 사용 시 경직 면역 (스킬 종료 시 해제)
     designerIntent: '높은 분노에서 스킬이 끊기지 않게 해 분노 최대치 증가 효과를 볼 때 보호 '
   BA-T3-AS2:
-    name: 추가 필요
+    name: 무력한 처형
     summary: 추가 필요
     description: 적을 경직·무력화시킨 후 다음에 사용하는 스킬 피해량 40% 증가
     designerIntent: '경직 직후 다음 스킬을 필살기로 사용하도록 유도 '
   BA-T3-BS1:
-    name: 추가 필요
+    name: 재생
     summary: 추가 필요
     description: 분노 50% 이상일 때 받는 회복량 25% 증가
     designerIntent: '충전·피격 운영의 유지력을 50% 이상 구간에 더욱 메리트를 줌 '
   BA-T3-BS2:
-    name: 추가 필요
+    name: 전투 순환
     summary: 추가 필요
     description: 일반공격 3콤보 적중 시 분노 생성량 40% 증가. 스킬 사용 중 피격 시 다음 기본 공격 피해량 25% 증가
     designerIntent: '평타-스킬-평타 연계로, 맞을 것 같을 때 스킬을 써가면서 분노 100을 쌓을 수 있도록 완충지 역할을 함 '
   BA-T2-A1:
-    name: 추가 필요
+    name: 지속력
     summary: 추가 필요
     description: 액티브 스킬 분노 소모량 12% 감소
     designerIntent: '소용돌이 유지 비용을 낮춰 오랫동안 시전 가능하도록 함 '
   BA-T2-A2:
-    name: 전사의 숙련
+    name: 일격의 숨
     summary: 스태미나 회복
     description: 액티브 스킬 사용 후 5초간 초당 스태미나 8% 회복
     designerIntent: '액티브 스킬 후 스태미나를 채워 다음 공격 순환이 일어나도록 함 '
   BA-T2-B1:
-    name: 추가 필요
+    name: 철갑
     summary: 추가 필요
     description: 충전 중 받는 피해량 28% 감소
     designerIntent: 충전 중 맞아도 덜 아프게 해 피격 환원을 성립
   BA-T2-B2:
-    name: 추가 필요
+    name: 맹타
     summary: 추가 필요
     description: 공격을 이어갈 때마다 공격력 6% 증가 (5중첩). 회피 시 효과 종료
     designerIntent: '피하지 않고 맞아가면서 플레이하는 것을 유도함 '
@@ -1961,17 +1961,17 @@ passives:
     description: 공격 중 피격 시 분노 7 생성
     designerIntent: 맞으면서 때릴 때 분노를 주어 피격 루프를 보조
   BA-T2-AS2:
-    name: 추가 필요
+    name: 연격 제압
     summary: 추가 필요
     description: 3초 이내 공격 연속 적중 시마다 경직 부여치 7% 증가 (5중첩)
     designerIntent: '타격을 이어갈수록 경직 확률이 높아지도록 설계. 소용돌이에 활용 '
   BA-T2-BS1:
-    name: 추가 필요
+    name: 축력
     summary: 추가 필요
     description: 충전 유지 시간에 따라 피해량 12%씩 추가 증가 (3중첩)
     designerIntent: '충전을 오래 버틸수록 이후 공격 피해량이 커지게 함 '
   BA-T2-BS2:
-    name: 추가 필요
+    name: 전장의 호흡
     summary: 추가 필요
     description: 일반공격 적중 시 28% 확률로 스태미나 8% 회복
     designerIntent: 평타 구간에 스태미나를 보충해 콤보 유지 유도
