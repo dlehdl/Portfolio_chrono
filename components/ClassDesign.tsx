@@ -400,7 +400,6 @@ const RangeGrid: React.FC<{ specs: { angle?: string; radius?: string } | undefin
 const VideoReference = ({ label, color = "stone", isWide = false, variant, src }: { label: string, color?: string, isWide?: boolean; variant?: 'default' | 'editorial'; src?: string }) => {
     const videoRef = useRef<HTMLVideoElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
-    const [isInView, setIsInView] = useState(false);
     const isEditorial = variant === 'editorial';
     const borderCls = isEditorial ? 'border-archival-ink/20' : `border-white/10 hover:border-${color}-500/50`;
     const innerCls = isWide ? "absolute inset-0" : (isEditorial ? "absolute inset-0" : "aspect-video relative");
@@ -408,31 +407,40 @@ const VideoReference = ({ label, color = "stone", isWide = false, variant, src }
     useEffect(() => {
         if (!src || !containerRef.current) return;
         const el = containerRef.current;
+        const play = () => { videoRef.current?.play().catch(() => {}); };
         const obs = new IntersectionObserver(
             ([entry]) => {
-                const inView = entry.isIntersecting;
-                setIsInView(inView);
-                if (videoRef.current) {
-                    if (inView) videoRef.current.play().catch(() => {});
-                    else videoRef.current.pause();
-                }
+                if (entry.isIntersecting) play();
+                else videoRef.current?.pause();
             },
-            { threshold: 0.25, rootMargin: '0px' }
+            { threshold: 0, rootMargin: '120px 0px' }
         );
         obs.observe(el);
+        play();
         return () => obs.disconnect();
     }, [src]);
 
     const handlePlay = () => { if (src && videoRef.current) { videoRef.current.paused ? videoRef.current.play() : videoRef.current.pause(); } };
 
-    const showOverlay = !src ? true : !isInView;
+    const showOverlay = !src;
     return (
     <div ref={containerRef} className={`w-full h-full min-h-0 bg-black relative group overflow-hidden ${!isWide && !isEditorial ? 'border-b' : ''} ${isWide ? 'md:border-r border-b md:border-b-0' : ''} ${borderCls} transition-all duration-500`}>
         <div className={innerCls}>
             {src && (
-                <video ref={videoRef} src={src} className="absolute inset-0 w-full h-full object-cover" playsInline muted loop onClick={handlePlay} />
+                <video
+                    ref={videoRef}
+                    src={src}
+                    className="absolute inset-0 w-full h-full object-cover"
+                    playsInline
+                    muted
+                    loop
+                    autoPlay
+                    preload="auto"
+                    onCanPlay={() => { videoRef.current?.play().catch(() => {}); }}
+                    onClick={handlePlay}
+                />
             )}
-            <div className={`absolute inset-0 flex items-center justify-center transition-all duration-500 ${showOverlay ? (src ? 'bg-stone-900/60 cursor-pointer' : 'bg-stone-900/60 group-hover:bg-stone-900/20') : 'bg-transparent pointer-events-none'}`} onClick={src && showOverlay ? handlePlay : undefined} style={{ pointerEvents: showOverlay ? undefined : 'none' }}>
+            <div className={`absolute inset-0 flex items-center justify-center transition-all duration-500 ${showOverlay ? 'bg-stone-900/60 group-hover:bg-stone-900/20' : 'bg-transparent pointer-events-none'}`} style={{ pointerEvents: showOverlay ? undefined : 'none' }}>
                 <div className={`w-12 h-12 rounded-full border border-white/10 bg-black/50 backdrop-blur-sm flex items-center justify-center text-white/50 transition-all duration-300 shadow-2xl ${showOverlay ? '' : 'opacity-0 pointer-events-none'} ${!src ? 'group-hover:text-white group-hover:scale-110 group-hover:border-stone-500 group-hover:bg-stone-500/20' : ''}`}>
                     <Play size={16} fill="currentColor" />
                 </div>
