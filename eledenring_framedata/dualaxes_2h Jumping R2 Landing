@@ -1,0 +1,196 @@
+{
+    "name": "2h Jumping R2 Landing",
+    "version": "1.14.1",
+    "labels": [
+        "Attack",
+        "Special"
+    ],
+    "id": "033270",
+    "filename": "a258_033270",
+    "section": "a258",
+    "sourceKey": "a030_031270.hkt-33270",
+    "motionCategory": 258,
+    "attacks": [
+        "101400160:1406"
+    ],
+    "users": [
+        {
+            "name": "Death Knight's Twin Axes",
+            "id": 14510000,
+            "type": "Weapon"
+        }
+    ],
+    "categories": [
+        "Axe"
+    ],
+    "hash": "4371e865f3047c40b6bb9442013b112ee2e69b40",
+    "events": {
+        "activeFrames": [
+            {
+                "range": [
+                    15,
+                    19
+                ],
+                "type": "Attack",
+                "params": {
+                    "AttackIndex": 2,
+                    "AttackType": 0,
+                    "BehaviorJudgeID": 160,
+                    "AtkParamID": [
+                        "101400160:1406"
+                    ]
+                }
+            }
+        ],
+        "cancels": [
+            {
+                "type": "LightAttackOnly",
+                "range": {
+                    "Regular": [
+                        36,
+                        37
+                    ]
+                }
+            },
+            {
+                "type": "RightAttack",
+                "range": {
+                    "Regular": [
+                        37,
+                        77
+                    ]
+                }
+            },
+            {
+                "type": "FastGoods",
+                "range": {
+                    "Regular": [
+                        38,
+                        80
+                    ],
+                    "LightEquipLoad": [
+                        36,
+                        80
+                    ]
+                }
+            },
+            {
+                "type": "FastWeaponArt",
+                "range": {
+                    "Regular": [
+                        38,
+                        80
+                    ]
+                }
+            },
+            {
+                "type": "LeftAttack",
+                "range": {
+                    "Regular": [
+                        38,
+                        80
+                    ]
+                }
+            },
+            {
+                "type": "Dodge",
+                "range": {
+                    "Regular": [
+                        38,
+                        80
+                    ]
+                }
+            },
+            {
+                "type": "Block",
+                "range": {
+                    "Regular": [
+                        40,
+                        80
+                    ]
+                }
+            },
+            {
+                "type": "Goods",
+                "range": {
+                    "Regular": [
+                        40,
+                        80
+                    ]
+                }
+            },
+            {
+                "type": "Magic",
+                "range": {
+                    "Regular": [
+                        40,
+                        80
+                    ]
+                }
+            },
+            {
+                "type": "SwitchWeapon",
+                "range": {
+                    "Regular": [
+                        40,
+                        80
+                    ]
+                }
+            },
+            {
+                "type": "WeaponArt",
+                "range": {
+                    "Regular": [
+                        44,
+                        80
+                    ]
+                }
+            },
+            {
+                "type": "Move",
+                "range": {
+                    "Regular": [
+                        44,
+                        80
+                    ]
+                }
+            },
+            {
+                "type": "HeavyAttackOnly",
+                "range": {
+                    "Regular": [
+                        77,
+                        80
+                    ]
+                }
+            }
+        ],
+        "spEffects": [
+            {
+                "range": [
+                    15,
+                    38
+                ],
+                "id": 45,
+                "mp": true
+            },
+            {
+                "range": [
+                    19,
+                    39
+                ],
+                "id": 146,
+                "mp": true
+            }
+        ],
+        "blend": [
+            [
+                0,
+                3
+            ]
+        ]
+    },
+    "cancelFrom": [
+        "SwitchWeapon"
+    ]
+}

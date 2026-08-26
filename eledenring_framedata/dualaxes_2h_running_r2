@@ -1,0 +1,206 @@
+{
+    "name": "2h Running R2",
+    "version": "1.14.1",
+    "labels": [
+        "Attack",
+        "HasSpeedGradient",
+        "Parriable",
+        "Special"
+    ],
+    "id": "032210",
+    "filename": "a258_032210",
+    "section": "a258",
+    "sourceKey": "a030_030210.hkt-32210",
+    "motionCategory": 258,
+    "attacks": [
+        "101421325:1399"
+    ],
+    "users": [
+        {
+            "name": "Death Knight's Twin Axes",
+            "id": 14510000,
+            "type": "Weapon"
+        }
+    ],
+    "categories": [
+        "Axe"
+    ],
+    "hash": "9e29853c38e225eac59ad52a3a3fa63cf4984a5b",
+    "events": {
+        "activeFrames": [
+            {
+                "range": [
+                    18,
+                    21
+                ],
+                "type": "Attack",
+                "params": {
+                    "AttackIndex": 0,
+                    "AttackType": 0,
+                    "BehaviorJudgeID": 325,
+                    "AtkParamID": [
+                        "101421325:1399"
+                    ]
+                }
+            }
+        ],
+        "cancels": [
+            {
+                "type": "Dodge",
+                "range": {
+                    "Regular": [
+                        31,
+                        68
+                    ]
+                }
+            },
+            {
+                "type": "LightAttackOnly",
+                "range": {
+                    "Regular": [
+                        37,
+                        78
+                    ]
+                }
+            },
+            {
+                "type": "HeavyAttackOnly",
+                "range": {
+                    "Regular": [
+                        37,
+                        74
+                    ]
+                }
+            },
+            {
+                "type": "FastWeaponArt",
+                "range": {
+                    "Regular": [
+                        38,
+                        78
+                    ]
+                }
+            },
+            {
+                "type": "FastGoods",
+                "range": {
+                    "Regular": [
+                        41,
+                        78
+                    ],
+                    "LightEquipLoad": [
+                        39,
+                        78
+                    ]
+                }
+            },
+            {
+                "type": "Block",
+                "range": {
+                    "Regular": [
+                        41,
+                        78
+                    ]
+                }
+            },
+            {
+                "type": "SwitchWeapon",
+                "range": {
+                    "Regular": [
+                        41,
+                        78
+                    ]
+                }
+            },
+            {
+                "type": "WeaponArt",
+                "range": {
+                    "Regular": [
+                        42,
+                        78
+                    ]
+                }
+            },
+            {
+                "type": "Goods",
+                "range": {
+                    "Regular": [
+                        43,
+                        78
+                    ]
+                }
+            },
+            {
+                "type": "Magic",
+                "range": {
+                    "Regular": [
+                        43,
+                        78
+                    ]
+                }
+            },
+            {
+                "type": "Move",
+                "range": {
+                    "Regular": [
+                        48,
+                        78
+                    ]
+                }
+            },
+            {
+                "type": "Dodge",
+                "range": {
+                    "Regular": [
+                        31,
+                        78
+                    ]
+                }
+            },
+            {
+                "type": "HeavyAttackOnly",
+                "range": {
+                    "Regular": [
+                        37,
+                        78
+                    ]
+                }
+            }
+        ],
+        "gradients": [
+            {
+                "range": [
+                    0,
+                    18
+                ],
+                "startSpeed": 1.12,
+                "endSpeed": 1.12
+            }
+        ],
+        "spEffects": [
+            {
+                "range": [
+                    18,
+                    39
+                ],
+                "id": 45,
+                "mp": true
+            }
+        ],
+        "canBeParried": [
+            [
+                18,
+                19
+            ]
+        ],
+        "blend": [
+            [
+                0,
+                5
+            ]
+        ]
+    },
+    "cancelFrom": [
+        "Move"
+    ]
+}

@@ -1,0 +1,165 @@
+시각화 시 문장 톤 가이드 
+- 실무 보고서처럼 간결하게 
+
+한 줄 정의
+“테이블 기준으로 스킬 쇼 → 모션 → 몽타주를 한 번에 조회하여 리스트업하는 내부용 도구”
+
+문제(전)
+    1. 수작업 시 스킬에 연결된 쇼, 모션를 확인하기 위하여 매번 엔진을 켜야하는 번거로움
+    2. 쇼에 남성/여성/무기 모션이 모두 연결되어있는지 한눈에 파악하기 어려움 
+    3. 모션, 이펙트, 사운드팀에 사용 중인 리소스 전달 시 리스트업에 시간이 소요되는 문제 
+
+입력
+    어떤 테이블/키를 기준으로 하는지 (컬럼 이름 수준까지면 다이어그램에 쓰기 좋음)
+    테이+블: skill
+        컬럼: id, devname, ExecId, ExecStepShow, CastStepShow, FireStepShow, EndStepShow
+    테이블: Exec 
+        칼럼: id
+    테이블: Execproperty
+        칼럼: id, Resultid
+    테이블: ExecpropertyResult
+       칼럼: id, devname,ResultTargetShow, ResultEnvironmentShow
+
+출력
+    쇼 에셋 경로/이름, 모션, 몽타주 
+    경로 예시(버서커 사슬검): Content/Show/Character/Hero/PC005/J0501
+   쇼파일명 예시: 
+    ExecStepShow: PC501_NormalAttack_Combo03
+    ResultTargetShow: PC501_NormalAttack_Combo03_Result01
+   모션 이름 예시: 
+    남자: PC_M_J0501_NormalAttack_Combo03
+    여자: PC_F_J0501_NormalAttack_Combo03
+    남자 무기: WP_M_J0501_NormalAttack_Combo03
+    여자 무기: WP_F_J0501_NormalAttack_Combo03
+    몽타주 예시:
+        PC_M_J0501_NormalAttack_Combo03_Montage
+        PC_F_J0501_NormalAttack_Combo03_Montage
+    
+흐름
+    1) 테이블 읽기 → 2) 참조 해석 → 3) 연결 수집 → 4) 결과 포맷 — 단계만 있어도 됨
+    1) 데이터 경로 지정 
+        - 쇼파일 경로 지정 
+        - 테이블 데이터 경로 지정 
+            예시)Content/ExcelData/DesignData/Battle
+    2) 테이블 읽기 
+        - skill 테이블에서 ExecStepShow, CastStepShow, FireStepShow, EndStepShow를 조회
+        - Skill 테이블에서 ExecId를 기준으로 Exec 테이블을 조회하여 Execid를 조회
+        - Execproperty 테이블에서 Resultid를 기준으로 ExecpropertyResult 테이블을 조회하여 ResultTargetShow, ResultEnvironmentShow를 조회
+    3) 연결 수집      
+        - 수집된 Show 파일을 기반으로 에셋 경로/이름, 모션, 몽타주 수집 
+    4) 결과 포맷 
+        - 출력 포맷 값 
+            - 원본 엑셀 파일명: 해당 데이터의 출처 테이블 파일명 표시 
+            - SourceSheet: 행이 나온 시트 구분값 (예: skill, ExecpropertyResult). skill 행은 skill, Exec_Berserker.xlsm의 Result 경로는 ExecpropertyResult
+            - dataid: 해당 데이터의 dataid. SourceSheet(또는 SourceFile)가 다르면 동일 dataid를 별도 행으로 둘 수 있음
+            - devname: 해당 데이터의 devname 표시
+            - showcolumn: 해당 데이터의 showcolumn 종류값.예)ExecStepShow, CastStepShow, FireStepShow, EndStepShow
+            - ShowAsset: 해당 데이터의 쇼 파일명 
+            - MotionAsset_PC: 해당 쇼에 연결된 플레이어 캐릭터 모션(PC_M, PC_F). 정상 시 남·여 모두 한 셀에 개행으로 표기 
+            - MotionAsset_WP: 해당 쇼에 연결된 무기 모션(WP_M, WP_F). 정상 시 남·여 모두 한 셀에 개행으로 표기 
+            - MontageAsset: PC 모션에 연결된 몽타주. 정상 시 남(PC_M_*_Montage)·여(PC_F_*_Montage) 개행으로 표기 
+            - Error: PC_M·PC_F·WP_M·WP_F가 모두 연결된 경우에만 비움(Error: -). 하나라도 누락 시 해당 Missing 타입 출력
+                ErrorType: Motion_PC_M_MISSING | Motion_PC_F_MISSING | Motion_WP_M_MISSING | Motion_WP_F_MISSING
+        - 결과 출력 예시 (오류 행 — F측 PC·무기 모션 누락)
+           - 원본 엑셀 파일명: skill_Berserker.xlsm 
+           - dataid: 50103000
+           - devname: 버서커 사슬검 일반공격 3타 
+           - showcolumn: ExecStepShow
+           - ShowAsset: PC501_NormalAttack_Combo03
+           - MotionAsset_PC: PC_M_J0501_NormalAttack_Combo03  (PC_F_… 누락)
+           - MotionAsset_WP: WP_M_J0501_NormalAttack_Combo03  (WP_F_… 누락)
+           - MontageAsset: PC_M_J0501_NormalAttack_Combo03_Montage
+           - Error: Motion_PC_F_MISSING | Motion_WP_F_MISSING
+    5) 데이터 필터링 
+        - 중복된 ShowAsset, MotionAsset, MontageAsset 숨기기 
+        - 사용 중인 스킬만 보기 
+        - 원하는 칼럼만 보기 
+        - 오류 발생 중인 데이터만 보기 
+        - 결과 출력 예시 확장 데이터 (포트폴리오 UI·필터 데모용 가짜 행 9건)
+            메타 필드 (구현 시 컴포넌트 state와 매핑)
+                - 사용: 예 | 아니오  → 「사용 중인 스킬만 보기」 ON이면 사용=예 행만 표시
+                - 중복 표시: (행 N과 ShowAsset 동일) → 「중복 에셋 숨기기」 ON이면 대표 1행만 남김 등 규칙 설명용
+                - UI 동기: 아래 9행은 components/AIAutomationSection.tsx 의 RESULT_ROWS_SOURCE 와 동일
+            공통
+                - Error 없음은 Error: - 로 표기 (일반적으로 PC_M+PC_F, WP_M+WP_F, 몽타주 M+F 연결 시)
+                - 예외: ResultTargetShow 등 Result 쇼만 추출하는 행(행 02, dataid 50101000·SourceSheet ExecpropertyResult)은 모션·몽타주가 비어 있어도 Error: - 로 둔 데모
+                - 포트폴리오 표에서는 Motion/Montage를 한 셀에 두 줄(개행)로 표시
+            행 01  사용=예
+                SourceFile: skill_Berserker.xlsm | SourceSheet: skill | dataid: 50101000 | devname: 버서커 사슬검 일반공격 1타
+                showcolumn: ExecStepShow | ShowAsset: PC501_NormalAttack_Combo01
+                MotionAsset_PC: PC_M_J0501_NormalAttack_Combo01 + PC_F_J0501_NormalAttack_Combo01
+                MotionAsset_WP: WP_M_J0501_NormalAttack_Combo01 + WP_F_J0501_NormalAttack_Combo01
+                MontageAsset: PC_M_J0501_NormalAttack_Combo01_Montage + PC_F_J0501_NormalAttack_Combo01_Montage | Error: -
+            행 02  사용=예  (동일 dataid 50101000, SourceSheet만 ExecpropertyResult — Result 쇼, 모션/몽타주 없음·Error 없음)
+                SourceFile: Exec_Berserker.xlsm | SourceSheet: ExecpropertyResult | dataid: 50101000 | devname: 버서커 사슬검 일반공격 1타 (ExecpropertyResult)
+                showcolumn: ResultTargetShow | ShowAsset: PC501_NormalAttack_Combo01_Result01
+                MotionAsset_PC: —
+                MotionAsset_WP: —
+                MontageAsset: — | Error: -
+            행 03  사용=예
+                SourceFile: skill_Berserker.xlsm | SourceSheet: skill | dataid: 50102000 | devname: 버서커 사슬검 일반공격 2타
+                showcolumn: CastStepShow | ShowAsset: PC501_NormalAttack_Combo02
+                MotionAsset_PC: PC_M_J0501_NormalAttack_Combo02 + PC_F_J0501_NormalAttack_Combo02
+                MotionAsset_WP: WP_M_J0501_NormalAttack_Combo02 + WP_F_J0501_NormalAttack_Combo02
+                MontageAsset: PC_M_J0501_NormalAttack_Combo02_Montage + PC_F_J0501_NormalAttack_Combo02_Montage | Error: -
+            행 04  사용=예  (오류)
+                SourceFile: skill_Berserker.xlsm | SourceSheet: skill | dataid: 50103000 | devname: 버서커 사슬검 일반공격 3타
+                showcolumn: ExecStepShow | ShowAsset: PC501_NormalAttack_Combo03
+                MotionAsset_PC: PC_M만 연결 (PC_F 누락)
+                MotionAsset_WP: WP_M만 연결 (WP_F 누락)
+                MontageAsset: PC_M_J0501_NormalAttack_Combo03_Montage
+                Error: Motion_PC_F_MISSING | Motion_WP_F_MISSING
+            행 05  사용=예  (오류)
+                SourceFile: skill_Berserker.xlsm | SourceSheet: skill | dataid: 50104000 | devname: 버서커 사슬검 일반공격 4타
+                showcolumn: ExecStepShow | ShowAsset: PC501_NormalAttack_Combo04
+                MotionAsset_PC: PC_M만 연결 (PC_F 누락)
+                MotionAsset_WP: WP_M + WP_F 정상
+                MontageAsset: PC_M + PC_F 몽타주 | Error: Motion_PC_F_MISSING
+            행 06  사용=아니오  (미사용·정상)
+                SourceFile: skill_Berserker.xlsm | SourceSheet: skill | dataid: 50999001 | devname: [미사용] 구버전 사슬검 테스트 1
+                showcolumn: ExecStepShow | ShowAsset: PC501_LegacyTest_01
+                MotionAsset_PC: PC_M + PC_F
+                MotionAsset_WP: WP_M + WP_F
+                MontageAsset: PC_M + PC_F 몽타주 | Error: -
+            행 07  사용=예  중복 표시: (행 01과 ShowAsset 동일 PC501_NormalAttack_Combo01)
+                SourceFile: skill_Berserker.xlsm | SourceSheet: skill | dataid: 50101100 | devname: 버서커 사슬검 파생 쇼 A
+                showcolumn: FireStepShow | ShowAsset: PC501_NormalAttack_Combo01
+                MotionAsset_PC: PC_M + PC_F
+                MotionAsset_WP: WP_M + WP_F
+                MontageAsset: PC_M + PC_F 몽타주 | Error: -
+            행 08  사용=예
+                SourceFile: skill_Berserker.xlsm | SourceSheet: skill | dataid: 50107000 | devname: 버서커 듀얼액스 일반 1타
+                showcolumn: CastStepShow | ShowAsset: PC502_DualAxes_Combo01
+                MotionAsset_PC: PC_M + PC_F
+                MotionAsset_WP: WP_M + WP_F
+                MontageAsset: PC_M + PC_F 몽타주 | Error: -
+            행 09  사용=예  중복 표시: (행 08과 MontageAsset 동일)
+                SourceFile: skill_Berserker.xlsm | SourceSheet: skill | dataid: 50107100 | devname: 버서커 듀얼액스 캐스트 보조
+                showcolumn: CastStepShow | ShowAsset: PC502_DualAxes_CastAssist
+                MotionAsset_PC: PC_M + PC_F
+                MotionAsset_WP: WP_M + WP_F
+                MontageAsset: 행 08과 동일 Combo01 몽타주 (M+F) | Error: -
+    6) 데이터 추출 
+        - 엑셀로내보내는 기능 추가 
+
+역할 분담
+    Cursor/AI가 한 일 vs 네가 한 판단(기획·검증 기준)
+    - 내가 한 일: 툴에 대한 기획, 데이터 구조 기획 
+        정확히 어떤 데이터를 참조하고 가져올 것인지에 대한 기획 
+       필터 기능에 대한 기획 
+       검증 
+        검증 기준: 샘플 스킬 50건을 대상으로 수동 대조 검증을 진행했으며, 쇼→모션→몽타주 참조 추적 결과가 기존 방식과 동일함을 확인
+    - 커서가 한 일: 실제 구현 
+도구 스택
+(예: Cursor, 스크립트 언어, UE 관련이라면 범위만)
+    - 커서 AI 및 파이썬 활용 
+성과
+    - 모션팀의 요청에 따라 사용 중인 모션 리스트업에 걸리는 시간 
+        도입 전: 작업자 3명 기준 3시간 
+        도입 후: 작업자 1명이 5분 내외로 완료 
+    - 쇼에 모션 연결 누락 건 리스트업에 걸리는 시간 
+        도입 전: 작업자 3명 기준 반나절 내외
+        도입 후: 작업자 1명 기준 5분 내외로 완료 
+
+한계·윤리
+    - 내부 전용 툴로 개발하여 이미지 자료 및 실제 데이터를 첨부할 수 없는 점 양해 부탁. 

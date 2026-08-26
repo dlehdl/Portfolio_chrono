@@ -1,0 +1,45 @@
+flowchart TD
+    %% 1. 시작 및 예외 처리
+    Start([스킬 시전 입력]) --> CheckLock{1. 하드 락온 중인가?}
+    
+    CheckLock -- Yes --> HardLockAction[락온 대상 공격]
+    CheckLock -- No --> CheckType{스킬 타입 확인}
+    
+    CheckType -- 회피기/이동기 --> ManualAction[입력 방향 그대로 실행\n(보정 없음)]
+    CheckType -- 일반 공격/스킬 --> CheckInput{2.1 이동 입력(WASD) 중?}
+
+    %% 2. 기준 벡터 설정 (핵심: 입력 우선)
+    CheckInput -- Yes (입력 우선) --> SetInputVec[기준 벡터: <b>입력 방향 (Input Vector)</b>]
+    CheckInput -- No (중립) --> SetActorVec[기준 벡터: <b>캐릭터 정면 (Actor Forward)</b>]
+
+    %% 3. 탐색 및 필터링
+    SetInputVec & SetActorVec --> DefineRange[2.2 탐색 범위 설정]
+    
+    DefineRange --> FilterGate{2.3 유효성 검사}
+    FilterGate -- "Raycast(벽) 충돌 or\n화면 밖 or\n기준 벡터와 45도 이상 차이" --> DropCandidate[후보 제외]
+    FilterGate -- 통과 --> ScoreCalc[2.4 점수 산출]
+
+    %% 4. 타겟 선정 (단순화됨)
+    ScoreCalc --> CalcAngle[<b>Angle Score 계산</b>\n기준 벡터와 가장 각도가 작은 대상 선정]
+    CalcAngle --> IsTargetFound{타겟 존재?}
+    
+    IsTargetFound -- No (허공) --> ManualAction
+    IsTargetFound -- Yes --> CalculateTurn[3.1 회전각 계산]
+
+    %% 5. 보정 실행 (최소 개입 원칙)
+    CalculateTurn --> CheckClamp{회전 각도가 30도 초과?}
+    
+    CheckClamp -- Yes (너무 멂) --> ClampAction[<b>최대 30도까지만 회전</b>\n(나머지 오차는 빗나감 허용)]
+    CheckClamp -- No (범위 내) --> PreciseAction[타겟 향해 정밀 회전]
+
+    %% 6. 종료 및 초기화
+    ClampAction & PreciseAction & ManualAction & HardLockAction --> Execute([공격 실행])
+    
+    Execute --> ResetTarget[3.2 타겟 정보 즉시 초기화\n(No Sticky)]
+    ResetTarget -.-> NextCombo[연타 입력 시\n처음부터 재탐색]
+
+    %% 스타일 정의
+    style Start fill:#f9f,stroke:#333,stroke-width:2px
+    style Execute fill:#f9f,stroke:#333,stroke-width:2px
+    style SetInputVec fill:#d4f1f4,stroke:#333,stroke-width:2px
+    style ClampAction fill:#ffcccc,stroke:#f00,stroke-width:2px,stroke-dasharray: 5 5

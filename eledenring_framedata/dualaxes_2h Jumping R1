@@ -1,0 +1,114 @@
+{
+    "name": "2h Jumping R1",
+    "version": "1.14.1",
+    "labels": [
+        "Attack",
+        "Multihit",
+        "Special"
+    ],
+    "id": "033030",
+    "filename": "a258_033030",
+    "section": "a258",
+    "sourceKey": "a030_034530.hkt-33030",
+    "motionCategory": 258,
+    "attacks": [
+        "101421355:1405",
+        "101421350:1405"
+    ],
+    "users": [
+        {
+            "name": "Death Knight's Twin Axes",
+            "id": 14510000,
+            "type": "Weapon"
+        }
+    ],
+    "categories": [
+        "Axe"
+    ],
+    "hash": "07061f1ea6ca378ade279c83ff49519fba57c128",
+    "events": {
+        "activeFrames": [
+            {
+                "range": [
+                    15,
+                    18
+                ],
+                "type": "Attack",
+                "params": {
+                    "AttackIndex": 4,
+                    "AttackType": 0,
+                    "BehaviorJudgeID": 355,
+                    "AtkParamID": [
+                        "101421355:1405"
+                    ]
+                }
+            },
+            {
+                "range": [
+                    19,
+                    42
+                ],
+                "type": "Attack",
+                "params": {
+                    "AttackIndex": 2,
+                    "AttackType": 0,
+                    "BehaviorJudgeID": 350,
+                    "AtkParamID": [
+                        "101421350:1405"
+                    ]
+                }
+            }
+        ],
+        "spEffects": [
+            {
+                "range": [
+                    0,
+                    42
+                ],
+                "id": 89,
+                "mp": true
+            },
+            {
+                "range": [
+                    0,
+                    42
+                ],
+                "id": 98,
+                "mp": true
+            },
+            {
+                "range": [
+                    0,
+                    42
+                ],
+                "id": 145,
+                "mp": true
+            },
+            {
+                "range": [
+                    0,
+                    42
+                ],
+                "id": 32,
+                "mp": true
+            },
+            {
+                "range": [
+                    15,
+                    42
+                ],
+                "id": 147,
+                "mp": true
+            }
+        ],
+        "blend": [
+            [
+                0,
+                5
+            ]
+        ]
+    },
+    "cancelFrom": [
+        "SwitchWeapon"
+    ]
+}

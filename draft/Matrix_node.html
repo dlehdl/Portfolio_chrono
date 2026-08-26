@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>매트릭스 무기 전용 노드</title>
+    <style>
+        :root {
+            --bg-color: #ffffff;
+            --line-color: #333333;
+            --tier-border: #666666;
+            
+            /* Node Colors */
+            --active-blue-bg: #d9e8f5;
+            --active-blue-border: #8ab4d1;
+            --active-green-bg: #e2efda;
+            --active-green-border: #a4c995;
+            --passive-main-bg: #fce4d6;
+            --passive-main-border: #f4b084;
+            --passive-sub-bg: #fff2cc;
+            --passive-sub-border: #ffd966;
+            --start-bg: #f2f2f2;
+            --start-border: #000000;
+            --red-dot: #ff6b6b;
+            --red-dot-border: #cc0000;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .tree-container {
+            position: relative;
+            width: 100%;
+            max-width: 1200px;
+            padding-top: 20px;
+        }
+
+        /* SVG Overlay for Lines */
+        #lines-svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .tiers-wrapper {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        /* Tier Layout */
+        .tier {
+            position: relative;
+            border: 2px dashed var(--tier-border);
+            border-radius: 20px;
+            padding: 30px 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .tier-label {
+            position: absolute;
+            left: 20px;
+            top: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .tier-content {
+            display: flex;
+            width: 100%;
+            max-width: 1000px;
+            justify-content: space-between;
+        }
+
+        .side-col {
+            width: 280px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .center-col {
+            width: 380px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .node-row {
+            display: flex;
+            gap: 25px;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .routing-row {
+            height: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            position: relative;
+        }
+
+        /* Node Styles */
+        .node {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 12px;
+            line-height: 1.4;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            position: relative;
+        }
+
+        .active-blue {
+            width: 70px;
+            height: 50px;
+            background-color: var(--active-blue-bg);
+            border: 1px solid var(--active-blue-border);
+            color: #1a4d7a;
+        }
+
+        .active-green {
+            width: 70px;
+            height: 50px;
+            background-color: var(--active-green-bg);
+            border: 1px solid var(--active-green-border);
+            color: #2e591c;
+        }
+
+        .passive-main {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--passive-main-bg);
+            border: 1px solid var(--passive-main-border);
+            color: #8c4217;
+        }
+
+        .passive-sub {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background-color: var(--passive-sub-bg);
+            border: 1px solid var(--passive-sub-border);
+            color: #8a6d1c;
+        }
+
+        .start-node {
+            width: 110px;
+            height: 45px;
+            border-radius: 25px;
+            background-color: var(--start-bg);
+            border: 1px solid var(--start-border);
+            margin: 20px auto 0 auto;
+            font-weight: bold;
+        }
+
+        /* Routing Dots */
+        .red-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--red-dot);
+            border: 1px solid var(--red-dot-border);
+            position: relative;
+            z-index: 5;
+        }
+
+        .z-label {
+            position: absolute;
+            top: -18px;
+            left: -15px;
+            font-size: 12px;
+            font-style: italic;
+            color: #333;
+        }
+
+        /* Legend */
+        .legend {
+            position: absolute;
+            top: 40px;
+            right: 0;
+            border: 1px solid #999;
+            background: #f8f9fa;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 100px;
+            align-items: center;
+        }
+
+        .legend-title {
+            font-size: 12px;
+            font-weight: bold;
+            border: 1px solid #333;
+            padding: 2px 15px;
+            background: white;
+            margin-top: -25px;
+        }
+
+        .legend-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            font-size: 11px;
+        }
+
+        .legend-box {
+            width: 60px;
+            height: 35px;
+            background: white;
+            border: 1px solid #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .legend-circle {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: white;
+            border: 1px solid #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .legend-dot-wrap {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="tree-container">
+        <!-- SVG for Dynamic Lines -->
+        <svg id="lines-svg"></svg>
+
+        <!-- Legend -->
+        <div class="legend">
+            <div class="legend-title">Key</div>
+            <div class="legend-item">
+                <div class="legend-box">Acive</div>
+            </div>
+            <div class="legend-item">
+                <div class="legend-circle">Passive</div>
+            </div>
+            <div class="legend-item" style="margin-top: 10px;">
+                <div class="legend-dot-wrap">
+                    <div class="red-dot"></div>
+                    <span style="font-size: 14px;">→</span>
+                </div>
+                <span>배타적 선택</span>
+            </div>
+        </div>
+
+        <div class="tiers-wrapper">
+            
+            <!-- TIER 5 -->
+            <div class="tier" id="tier-5">
+                <div class="tier-label">Tier 5</div>
+                <div class="tier-content">
+                    <div class="side-col"></div>
+                    <div class="center-col" style="justify-content: flex-end;">
+                        <!-- Trunk red dot branching to Mains -->
+                        <div class="routing-row" style="margin-bottom: 10px;">
+                            <div class="red-dot" id="dot_t5_c"></div>
+                        </div>
+                        <div class="node-row">
+                            <div class="node passive-main" id="t5_m1">Main</div>
+                            <div class="node passive-main" id="t5_m2">Main</div>
+                            <div class="node passive-main" id="t5_m3">Main</div>
+                            <div class="node passive-main" id="t5_m4">Main</div>
+                        </div>
+                    </div>
+                    <div class="side-col"></div>
+                </div>
+            </div>
+
+            <!-- TIER 4 -->
+            <div class="tier" id="tier-4">
+                <div class="tier-label">Tier 4</div>
+                <div class="tier-content">
+                    <!-- Left -->
+                    <div class="side-col">
+                        <div class="node-row">
+                            <div class="node active-blue" id="t4_a2_up2">Active4<br>A2 UP2</div>
+                            <div class="node active-blue" id="t4_a1_up2">Active4<br>A1 UP2</div>
+                        </div>
+                        <div class="node-row">
+                            <div class="node active-blue" id="t4_a2_up1">Active4<br>A2 UP1</div>
+                            <div class="node active-blue" id="t4_a1_up1">Active4<br>A1 UP1</div>
+                        </div>
+                        <div class="routing-row">
+                            <div class="red-dot" id="dot_t4_l"></div>
+                        </div>
+                    </div>
+                    <!-- Center -->
+                    <div class="center-col">
+                        <div class="node-row">
+                            <div class="node passive-sub" id="t4_s1">Sub</div>
+                            <div class="node passive-sub" id="t4_s2">Sub</div>
+                            <div class="node passive-sub" id="t4_s3">Sub</div>
+                            <div class="node passive-sub" id="t4_s4">Sub</div>
+                        </div>
+                        <div class="routing-row">
+                            <div class="red-dot" id="dot_t4_c"><span class="z-label">z</span></div>
+                        </div>
+                        <div class="node-row">
+                            <div class="node passive-main" id="t4_m1">Main</div>
+                            <div class="node passive-main" id="t4_m2">Main</div>
+                            <div class="node passive-main" id="t4_m3">Main</div>
+                            <div class="node passive-main" id="t4_m4">Main</div>
+                        </div>
+                    </div>
+                    <!-- Right -->
+                    <div class="side-col">
+                        <div class="node-row">
+                            <div class="node active-green" id="t4_b1_up2">Active4<br>B1 UP2</div>
+                            <div class="node active-green" id="t4_b2_up2">Active4<br>B2 UP2</div>
+                        </div>
+                        <div class="node-row">
+                            <div class="node active-green" id="t4_b1_up1">Active4<br>B1 UP1</div>
+                            <div class="node active-green" id="t4_b2_up1">Active4<br>B2 UP1</div>
+                        </div>
+                        <div class="routing-row">
+                            <div class="red-dot" id="dot_t4_r"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TIER 3 -->
+            <div class="tier" id="tier-3">
+                <div class="tier-label">Tier 3</div>
+                <div class="tier-content">
+                    <!-- Left -->
+                    <div class="side-col">
+                        <div class="node-row">
+                            <div class="node active-blue" id="t3_a2_up2">Active3<br>A2 UP2</div>
+                            <div class="node active-blue" id="t3_a1_up2">Active3<br>A1 UP2</div>
+                        </div>
+                        <div class="node-row">
+                            <div class="node active-blue" id="t3_a2_up1">Active3<br>A2 UP1</div>
+                            <div class="node active-blue" id="t3_a1_up1">Active3<br>A1 UP1</div>
+                        </div>
+                        <div class="routing-row">
+                            <div class="red-dot" id="dot_t3_l"></div>
+                        </div>
+                    </div>
+                    <!-- Center -->
+                    <div class="center-col">
+                        <div class="node-row">
+                            <div class="node passive-sub" id="t3_s1">Sub</div>
+                            <div class="node passive-sub" id="t3_s2">Sub</div>
+                            <div class="node passive-sub" id="t3_s3">Sub</div>
+                            <div class="node passive-sub" id="t3_s4">Sub</div>
+                        </div>
+                        <div class="routing-row">
+                            <div class="red-dot" id="dot_t3_c"></div>
+                        </div>
+                        <div class="node-row">
+                            <div class="node passive-main" id="t3_m1">Main</div>
+                            <div class="node passive-main" id="t3_m2">Main</div>
+                            <div class="node passive-main" id="t3_m3">Main</div>
+                            <div class="node passive-main" id="t3_m4">Main</div>
+                        </div>
+                    </div>
+                    <!-- Right -->
+                    <div class="side-col">
+                        <div class="node-row">
+                            <div class="node active-green" id="t3_b1_up2">Active3<br>B1 UP2</div>
+                            <div class="node active-green" id="t3_b2_up2">Active3<br>B2 UP2</div>
+                        </div>
+                        <div class="node-row">
+                            <div class="node active-green" id="t3_b1_up1">Active3<br>B1 UP1</div>
+                            <div class="node active-green" id="t3_b2_up1">Active3<br>B2 UP1</div>
+                        </div>
+                        <div class="routing-row">
+                            <div class="red-dot" id="dot_t3_r"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TIER 2 -->
+            <div class="tier" id="tier-2">
+                <div class="tier-label">Tier 2</div>
+                <div class="tier-content">
+                    <!-- Left -->
+                    <div class="side-col">
+                        <div class="node-row">
+                            <div class="node active-blue" id="t2_a2_up2">Active2<br>A2 UP2</div>
+                            <div class="node active-blue" id="t2_a1_up2">Active2<br>A1 UP2</div>
+                        </div>
+                        <div class="node-row">
+                            <div class="node active-blue" id="t2_a2_up1">Active2<br>A2 UP1</div>
+                            <div class="node active-blue" id="t2_a1_up1">Active2<br>A1 UP1</div>
+                        </div>
+                        <div class="routing-row">
+                            <div class="red-dot" id="dot_t2_l"></div>
+                        </div>
+                    </div>
+                    <!-- Center -->
+                    <div class="center-col">
+                        <div class="node-row">
+                            <div class="node passive-sub" id="t2_top_s1">Sub</div>
+                            <div class="node passive-sub" id="t2_top_s2">Sub</div>
+                            <div class="node passive-sub" id="t2_top_s3">Sub</div>
+                            <div class="node passive-sub" id="t2_top_s4">Sub</div>
+                        </div>
+                        <!-- Gap to separate upper and lower sub groups -->
+                        <div style="height: 10px;"></div>
+                        <div class="node-row">
+                            <div class="node passive-sub" id="t2_bot_s1">Sub</div>
+                            <div class="node passive-sub" id="t2_bot_s2">Sub</div>
+                            <div class="node passive-sub" id="t2_bot_s3">Sub</div>
+                            <div class="node passive-sub" id="t2_bot_s4">Sub</div>
+                        </div>
+                    </div>
+                    <!-- Right -->
+                    <div class="side-col">
+                        <div class="node-row">
+                            <div class="node active-green" id="t2_b1_up2">Active2<br>B1 UP2</div>
+                            <div class="node active-green" id="t2_b2_up2">Active2<br>B2 UP2</div>
+                        </div>
+                        <div class="node-row">
+                            <div class="node active-green" id="t2_b1_up1">Active2<br>B1 UP1</div>
+                            <div class="node active-green" id="t2_b2_up1">Active2<br>B2 UP1</div>
+                        </div>
+                        <div class="routing-row">
+                            <div class="red-dot" id="dot_t2_r"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TIER 1 -->
+            <div class="tier" id="tier-1">
+                <div class="tier-label">Tier 1</div>
+                <div class="tier-content">
+                    <!-- Left -->
+                    <div class="side-col">
+                        <div class="node-row">
+                            <div class="node active-blue" id="t1_a2_up2">Active1<br>A2 UP2</div>
+                            <div class="node active-blue" id="t1_a1_up2">Active1<br>A1 UP2</div>
+                        </div>
+                        <div class="node-row">
+                            <div class="node active-blue" id="t1_a2_up1">Active1<br>A2 UP1</div>
+                            <div class="node active-blue" id="t1_a1_up1">Active1<br>A1 UP1</div>
+                        </div>
+                        <div class="routing-row">
+                            <div class="red-dot" id="dot_t1_l"></div>
+                        </div>
+                    </div>
+                    <!-- Center (Empty but maintains layout structure) -->
+                    <div class="center-col"></div>
+                    <!-- Right -->
+                    <div class="side-col">
+                        <div class="node-row">
+                            <div class="node active-green" id="t1_b1_up2">Active1<br>B1 UP2</div>
+                            <div class="node active-green" id="t1_b2_up2">Active1<br>B2 UP2</div>
+                        </div>
+                        <div class="node-row">
+                            <div class="node active-green" id="t1_b1_up1">Active1<br>B1 UP1</div>
+                            <div class="node active-green" id="t1_b2_up1">Active1<br>B2 UP1</div>
+                        </div>
+                        <div class="routing-row">
+                            <div class="red-dot" id="dot_t1_r"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- START NODE -->
+            <div class="node start-node" id="start_node">Start</div>
+
+        </div>
+    </div>
+
+    <script>
+        function drawTree() {
+            const svg = document.getElementById('lines-svg');
+            const container = document.querySelector('.tree-container');
+            
+            // Setup SVG Definition for Arrowhead
+            svg.innerHTML = `
+                <defs>
+                    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5"
+                        markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                        <path d="M 0 0 L 10 5 L 0 10 z" fill="#333" />
+                    </marker>
+                </defs>
+            `;
+
+            const containerRect = container.getBoundingClientRect();
+
+            // Helper function to get element coordinates relative to the SVG container
+            function getCoords(id) {
+                const el = document.getElementById(id);
+                if (!el) return null;
+                const rect = el.getBoundingClientRect();
+                return {
+                    x: rect.left - containerRect.left + rect.width / 2,
+                    y: rect.top - containerRect.top + rect.height / 2,
+                    top: rect.top - containerRect.top,
+                    bottom: rect.bottom - containerRect.top
+                };
+            }
+
+            // Path generation helpers
+            function drawPath(d, withArrow = false) {
+                const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                path.setAttribute('d', d);
+                path.setAttribute('fill', 'none');
+                path.setAttribute('stroke', '#333');
+                path.setAttribute('stroke-width', '1.5');
+                if (withArrow) {
+                    path.setAttribute('marker-end', 'url(#arrow)');
+                }
+                svg.appendChild(path);
+            }
+
+            const start = getCoords('start_node');
+            if (!start) return; // Wait for DOM if not ready
+            
+            const trunkX = start.x;
+            let currentTrunkY = start.top;
+
+            function extendTrunkTo(y) {
+                drawPath(`M ${trunkX} ${currentTrunkY} L ${trunkX} ${y}`);
+                currentTrunkY = y;
+            }
+
+            // Helper to draw horizontal branch to side dots
+            function connectSideDots(dotL, dotR) {
+                if(!dotL || !dotR) return;
+                extendTrunkTo(dotL.y);
+                drawPath(`M ${trunkX} ${dotL.y} L ${dotL.x} ${dotL.y}`);
+                drawPath(`M ${trunkX} ${dotR.y} L ${dotR.x} ${dotR.y}`);
+            }
+
+            // Helper to draw UP from a dot to targets
+            function branchUpFromDot(dot, targetIds) {
+                targetIds.forEach(id => {
+                    const target = getCoords(id);
+                    if(target) {
+                        drawPath(`M ${dot.x} ${dot.y} L ${target.x} ${dot.y} L ${target.x} ${target.bottom}`, true);
+                    }
+                });
+            }
+
+            // Helper to draw DOWN from trunk to targets (Center Nodes)
+            function branchDownFromTrunk(targetIds, hasRedDot = false, dotId = null) {
+                const targets = targetIds.map(getCoords).filter(t => t !== null);
+                if(targets.length === 0) return;
+
+                let branchY;
+                if (hasRedDot && dotId) {
+                    const dot = getCoords(dotId);
+                    branchY = dot.y;
+                    extendTrunkTo(branchY);
+                } else {
+                    // Calculate branch line slightly above the nodes
+                    branchY = targets[0].top - 15;
+                    extendTrunkTo(branchY);
+                }
+
+                const minX = Math.min(...targets.map(t => t.x));
+                const maxX = Math.max(...targets.map(t => t.x));
+                
+                // Draw horizontal bar
+                drawPath(`M ${minX} ${branchY} L ${maxX} ${branchY}`);
+                
+                // Draw arrows down
+                targets.forEach(t => {
+                    drawPath(`M ${t.x} ${branchY} L ${t.x} ${t.top}`, true);
+                });
+            }
+
+            // Helper for simple vertical connections
+            function connectVertical(fromId, toId) {
+                const from = getCoords(fromId);
+                const to = getCoords(toId);
+                if(from && to) {
+                    drawPath(`M ${from.x} ${from.top} L ${to.x} ${to.bottom}`, true);
+                }
+            }
+
+
+            // --- Start Drawing Sequence (Bottom to Top) ---
+
+            // Tier 1
+            const d1L = getCoords('dot_t1_l');
+            const d1R = getCoords('dot_t1_r');
+            connectSideDots(d1L, d1R);
+            branchUpFromDot(d1L, ['t1_a2_up1', 't1_a1_up1']);
+            branchUpFromDot(d1R, ['t1_b1_up1', 't1_b2_up1']);
+            
+            connectVertical('t1_a2_up1', 't1_a2_up2');
+            connectVertical('t1_a1_up1', 't1_a1_up2');
+            connectVertical('t1_b1_up1', 't1_b1_up2');
+            connectVertical('t1_b2_up1', 't1_b2_up2');
+
+            // Tier 2
+            const d2L = getCoords('dot_t2_l');
+            const d2R = getCoords('dot_t2_r');
+            connectSideDots(d2L, d2R);
+            branchUpFromDot(d2L, ['t2_a2_up1', 't2_a1_up1']);
+            branchUpFromDot(d2R, ['t2_b1_up1', 't2_b2_up1']);
+            connectVertical('t2_a2_up1', 't2_a2_up2');
+            connectVertical('t2_a1_up1', 't2_a1_up2');
+            connectVertical('t2_b1_up1', 't2_b1_up2');
+            connectVertical('t2_b2_up1', 't2_b2_up2');
+            
+            branchDownFromTrunk(['t2_bot_s1', 't2_bot_s2', 't2_bot_s3', 't2_bot_s4']);
+            branchDownFromTrunk(['t2_top_s1', 't2_top_s2', 't2_top_s3', 't2_top_s4']);
+
+            // Tier 3
+            const d3L = getCoords('dot_t3_l');
+            const d3R = getCoords('dot_t3_r');
+            connectSideDots(d3L, d3R);
+            branchUpFromDot(d3L, ['t3_a2_up1', 't3_a1_up1']);
+            branchUpFromDot(d3R, ['t3_b1_up1', 't3_b2_up1']);
+            connectVertical('t3_a2_up1', 't3_a2_up2');
+            connectVertical('t3_a1_up1', 't3_a1_up2');
+            connectVertical('t3_b1_up1', 't3_b1_up2');
+            connectVertical('t3_b2_up1', 't3_b2_up2');
+
+            branchDownFromTrunk(['t3_m1', 't3_m2', 't3_m3', 't3_m4'], true, 'dot_t3_c');
+            branchDownFromTrunk(['t3_s1', 't3_s2', 't3_s3', 't3_s4']);
+
+            // Tier 4
+            const d4L = getCoords('dot_t4_l');
+            const d4R = getCoords('dot_t4_r');
+            connectSideDots(d4L, d4R);
+            branchUpFromDot(d4L, ['t4_a2_up1', 't4_a1_up1']);
+            branchUpFromDot(d4R, ['t4_b1_up1', 't4_b2_up1']);
+            connectVertical('t4_a2_up1', 't4_a2_up2');
+            connectVertical('t4_a1_up1', 't4_a1_up2');
+            connectVertical('t4_b1_up1', 't4_b1_up2');
+            connectVertical('t4_b2_up1', 't4_b2_up2');
+
+            branchDownFromTrunk(['t4_m1', 't4_m2', 't4_m3', 't4_m4'], true, 'dot_t4_c');
+            branchDownFromTrunk(['t4_s1', 't4_s2', 't4_s3', 't4_s4']);
+
+            // Tier 5
+            branchDownFromTrunk(['t5_m1', 't5_m2', 't5_m3', 't5_m4'], true, 'dot_t5_c');
+        }
+
+        // 초기 그리기 및 리사이즈 시 다시 그리기
+        window.addEventListener('load', () => {
+            // 약간의 지연을 주어 폰트 등 렌더링이 완전히 끝난 후 선을 계산하도록 함
+            setTimeout(drawTree, 100);
+        });
+        window.addEventListener('resize', drawTree);
+
+    </script>
+</body>
+</html>

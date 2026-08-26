@@ -1,0 +1,177 @@
+{
+    "name": "2h Jumping R1 Landing",
+    "version": "1.14.1",
+    "labels": [
+        "Attack",
+        "Multihit",
+        "Special"
+    ],
+    "id": "033070",
+    "filename": "a258_033070",
+    "section": "a258",
+    "sourceKey": "a030_034570.hkt-33070",
+    "motionCategory": 258,
+    "attacks": [
+        "101421355:1405",
+        "101421350:1405"
+    ],
+    "users": [
+        {
+            "name": "Death Knight's Twin Axes",
+            "id": 14510000,
+            "type": "Weapon"
+        }
+    ],
+    "categories": [
+        "Axe"
+    ],
+    "hash": "d4b96030a69dea062699a3d3e3cd359670db12a8",
+    "events": {
+        "activeFrames": [
+            {
+                "range": [
+                    15,
+                    18
+                ],
+                "type": "Attack",
+                "params": {
+                    "AttackIndex": 4,
+                    "AttackType": 0,
+                    "BehaviorJudgeID": 355,
+                    "AtkParamID": [
+                        "101421355:1405"
+                    ]
+                }
+            },
+            {
+                "range": [
+                    19,
+                    23
+                ],
+                "type": "Attack",
+                "params": {
+                    "AttackIndex": 2,
+                    "AttackType": 0,
+                    "BehaviorJudgeID": 350,
+                    "AtkParamID": [
+                        "101421350:1405"
+                    ]
+                }
+            }
+        ],
+        "cancels": [
+            {
+                "type": "RightAttack",
+                "range": {
+                    "Regular": [
+                        33,
+                        80
+                    ]
+                }
+            },
+            {
+                "type": "FastWeaponArt",
+                "range": {
+                    "Regular": [
+                        34,
+                        80
+                    ]
+                }
+            },
+            {
+                "type": "Dodge",
+                "range": {
+                    "Regular": [
+                        34,
+                        80
+                    ]
+                }
+            },
+            {
+                "type": "FastGoods",
+                "range": {
+                    "Regular": [
+                        37,
+                        80
+                    ],
+                    "LightEquipLoad": [
+                        35,
+                        80
+                    ]
+                }
+            },
+            {
+                "type": "Goods",
+                "range": {
+                    "Regular": [
+                        37,
+                        80
+                    ]
+                }
+            },
+            {
+                "type": "Magic",
+                "range": {
+                    "Regular": [
+                        37,
+                        80
+                    ]
+                }
+            },
+            {
+                "type": "SwitchWeapon",
+                "range": {
+                    "Regular": [
+                        37,
+                        80
+                    ]
+                }
+            },
+            {
+                "type": "WeaponArt",
+                "range": {
+                    "Regular": [
+                        40,
+                        80
+                    ]
+                }
+            },
+            {
+                "type": "Move",
+                "range": {
+                    "Regular": [
+                        44,
+                        80
+                    ]
+                }
+            }
+        ],
+        "spEffects": [
+            {
+                "range": [
+                    15,
+                    38
+                ],
+                "id": 45,
+                "mp": true
+            },
+            {
+                "range": [
+                    23,
+                    31
+                ],
+                "id": 146,
+                "mp": true
+            }
+        ],
+        "blend": [
+            [
+                0,
+                3
+            ]
+        ]
+    },
+    "cancelFrom": [
+        "SwitchWeapon"
+    ]
+}

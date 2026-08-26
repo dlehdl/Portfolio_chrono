@@ -1,0 +1,92 @@
+import React from 'react';
+import { Sword, RefreshCcw, Zap, Target, Flame, Wind } from 'lucide-react';
+
+export default function App() {
+  // 스킬 슬롯 컴포넌트
+  const SkillSlot = ({ num, icon: Icon }) => (
+    <div className="flex flex-col items-center gap-2">
+      <div 
+        className="w-14 h-14 sm:w-16 sm:h-16 lg:w-20 lg:h-20 rounded-full border-[3px] flex items-center justify-center shadow-md border-amber-950 bg-[#fdfaf7] text-amber-950"
+      >
+        <Icon className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 text-amber-950" />
+      </div>
+      <span className="text-xs sm:text-sm lg:text-base font-bold text-stone-900">
+        스킬 {num}
+      </span>
+    </div>
+  );
+
+  // 무기별 스킬 아이콘 배열 (시각적 다양성을 위해)
+  const weapon1Icons = [Target, Flame, Zap, Wind];
+  const weapon2Icons = [Wind, Target, Flame, Zap];
+
+  return (
+    <div className="min-h-screen bg-white flex flex-col items-center justify-center p-4 sm:p-8 font-sans">
+      
+      {/* 헤더 섹션 */}
+      <div className="mb-16 text-center">
+        <h1 className="text-3xl sm:text-4xl font-extrabold text-stone-900 tracking-tight mb-3">
+          액티브 스킬 장착 & 교체 구조
+        </h1>
+        <p className="text-amber-900/80 font-medium text-lg">
+          2개의 무기 슬롯과 무기당 4개의 액티브 스킬 (총 8개 운용)
+        </p>
+      </div>
+
+      {/* 메인 시각화 컨테이너 (가로 스크롤 지원으로 항상 수평 정렬 유지) */}
+      <div className="w-full max-w-6xl overflow-x-auto pb-4">
+        <div className="relative flex flex-row items-center justify-between min-w-[800px] px-6 py-16 lg:py-24 border border-stone-200 rounded-3xl bg-white shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+          
+          {/* 무기 1 영역 (왼쪽) */}
+          <div className="flex flex-col items-start gap-8 flex-1">
+            <div className="flex items-center gap-3 px-5 py-2.5 rounded-full shadow-sm border-2 bg-amber-950 border-amber-950 text-white">
+              <Sword size={20} />
+              <span className="font-bold tracking-wide text-sm sm:text-base whitespace-nowrap">1번 무기 (주무기)</span>
+            </div>
+            
+            {/* 좌측부터 나열 (1 -> 2 -> 3 -> 4) */}
+            <div className="flex flex-row gap-3 lg:gap-5">
+              {[1, 2, 3, 4].map((num, idx) => (
+                <SkillSlot key={`w1-${num}`} num={num} icon={weapon1Icons[idx]} />
+              ))}
+            </div>
+          </div>
+
+          {/* 중앙 무기 교체 (Swap) 버튼 */}
+          <div className="flex flex-col items-center gap-3 z-10 shrink-0 px-4">
+            <div className="flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 bg-white border-[3px] border-stone-900 rounded-full shadow-sm">
+              <RefreshCcw className="w-7 h-7 sm:w-8 sm:h-8 text-stone-900" />
+            </div>
+            <span className="text-sm font-bold text-stone-900 bg-stone-100 px-3 py-1.5 rounded-lg shadow-sm border border-stone-200 whitespace-nowrap">
+              교체 (Swap)
+            </span>
+          </div>
+
+          {/* 무기 2 영역 (오른쪽) */}
+          <div className="flex flex-col items-end gap-8 flex-1">
+            <div className="flex items-center gap-3 px-5 py-2.5 rounded-full shadow-sm border-2 bg-stone-900 border-stone-900 text-white">
+              <span className="font-bold tracking-wide text-sm sm:text-base whitespace-nowrap">2번 무기 (보조무기)</span>
+              <Sword size={20} className="scale-x-[-1]" />
+            </div>
+            
+            {/* 우측부터 나열 (flex-row-reverse를 통해 시각적으로 우측부터 1, 2, 3, 4 나열) */}
+            <div className="flex flex-row-reverse gap-3 lg:gap-5">
+              {[1, 2, 3, 4].map((num, idx) => (
+                <SkillSlot key={`w2-${num}`} num={num} icon={weapon2Icons[idx]} />
+              ))}
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      {/* 기획 설명 푸터 */}
+      <div className="mt-12 max-w-3xl text-center text-stone-700 bg-stone-50 p-6 sm:p-8 rounded-2xl border border-stone-200">
+        <p className="text-sm sm:text-base leading-relaxed break-keep">
+          플레이어는 두 개의 무기를 장착하여 무기당 4개의 액티브 스킬을 사용할 수 있습니다. 전투 중 무기 교체를 통해 즉각적으로 무기와 스킬셋을 전환합니다. 액티브 스킬은 각 클래스의 고유한 자원(CP)를 소모합니다.
+        </p>
+      </div>
+      
+    </div>
+  );
+}

@@ -1,0 +1,125 @@
+{
+    "name": "2h Jumping R2 Hangtime",
+    "version": "1.14.1",
+    "labels": [
+        "Attack",
+        "Multihit",
+        "Special"
+    ],
+    "id": "033260",
+    "filename": "a258_033260",
+    "section": "a258",
+    "sourceKey": "a030_031260.hkt-33260",
+    "motionCategory": 258,
+    "attacks": [
+        "101400160:1406"
+    ],
+    "users": [
+        {
+            "name": "Death Knight's Twin Axes",
+            "id": 14510000,
+            "type": "Weapon"
+        }
+    ],
+    "categories": [
+        "Axe"
+    ],
+    "hash": "0922cc2887222d4c8ea546ad8f559329172892eb",
+    "events": {
+        "activeFrames": [
+            {
+                "range": [
+                    0,
+                    10
+                ],
+                "type": "Attack",
+                "params": {
+                    "AttackIndex": 2,
+                    "AttackType": 0,
+                    "BehaviorJudgeID": 160,
+                    "AtkParamID": [
+                        "101400160:1406"
+                    ]
+                }
+            },
+            {
+                "range": [
+                    10,
+                    20
+                ],
+                "type": "Attack",
+                "params": {
+                    "AttackIndex": 3,
+                    "AttackType": 0,
+                    "BehaviorJudgeID": 160,
+                    "AtkParamID": [
+                        "101400160:1406"
+                    ]
+                }
+            },
+            {
+                "range": [
+                    20,
+                    30
+                ],
+                "type": "Attack",
+                "params": {
+                    "AttackIndex": 2,
+                    "AttackType": 0,
+                    "BehaviorJudgeID": 160,
+                    "AtkParamID": [
+                        "101400160:1406"
+                    ]
+                }
+            },
+            {
+                "range": [
+                    30,
+                    45
+                ],
+                "type": "Attack",
+                "params": {
+                    "AttackIndex": 3,
+                    "AttackType": 0,
+                    "BehaviorJudgeID": 160,
+                    "AtkParamID": [
+                        "101400160:1406"
+                    ]
+                }
+            }
+        ],
+        "spEffects": [
+            {
+                "range": [
+                    0,
+                    45
+                ],
+                "id": 147,
+                "mp": true
+            },
+            {
+                "range": [
+                    0,
+                    45
+                ],
+                "id": 98,
+                "mp": true
+            },
+            {
+                "range": [
+                    0,
+                    45
+                ],
+                "id": 32,
+                "mp": true
+            }
+        ],
+        "blend": [
+            [
+                0,
+                5
+            ]
+        ]
+    },
+    "cancelFrom": []
+}

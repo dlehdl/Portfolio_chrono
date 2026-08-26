@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Combat Designer Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              serif: ['"S-CoreDream"', 'sans-serif'],
+              'hero-serif': ['"Cormorant Garamond"', 'Georgia', 'serif'],
+              sans: ['"S-CoreDream"', 'sans-serif'],
+              mono: ['"S-CoreDream"', 'sans-serif'],
+              'archival-serif': ['"Playfair Display"', 'Georgia', 'serif'],
+              'archival-mono': ['"Space Mono"', 'monospace'],
+            },
+            fontWeight: {
+              light: '300',
+              normal: '300',
+              medium: '500',
+              semibold: '500',
+              bold: '600',
+              extrabold: '600',
+              black: '600',
+            },
+            colors: {
+              'void': '#0a0a0a',
+              'gold': '#c5a059',
+              'gold-dim': '#8a6d3b',
+              'blood': '#8a1c1c',
+              'archival-bg': '#E8E4D9',
+              'archival-bg-deep': '#DCD8CC',
+              'archival-ink': '#2A2A2A',
+              'archival-ink-deep': '#1F1F1F',
+              'archival-gold': '#a89870',
+              'archival-teal': '#5a7a75',
+            },
+            backgroundImage: {
+              'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+            }
+          },
+        },
+      }
+    </script>
+    <style>
+      @font-face {
+        font-family: 'S-CoreDream';
+        font-weight: 300;
+        font-style: normal;
+        src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
+      }
+      @font-face {
+        font-family: 'S-CoreDream';
+        font-weight: 500;
+        font-style: normal;
+        src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-5Medium.woff') format('woff');
+      }
+      @font-face {
+        font-family: 'S-CoreDream';
+        font-weight: 600;
+        font-style: normal;
+        src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-6Bold.woff') format('woff');
+      }
+
+      body {
+        background-color: #F2EFE9;
+        color: #1A1A1A;
+        overflow-x: hidden;
+        font-family: 'S-CoreDream', sans-serif;
+        font-weight: 300;
+        line-height: 1.6;
+      }
+      body::before {
+        content: '';
+        position: fixed;
+        inset: 0;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='b'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23b)' opacity='0.04'/%3E%3C/svg%3E");
+        pointer-events: none;
+        z-index: -1;
+      }
+      
+      /* Ensure form elements inherit the font family and weight */
+      button, input, textarea, select {
+        font-family: inherit;
+      }
+      
+      /* Force specific weights for semantic tags */
+      strong, b, h1, h2, h3, h4, h5, h6 {
+         font-weight: 600;
+      }
+
+      /* Custom scrollbar for Webkit */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #e8e5df;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: rgba(26, 26, 26, 0.25);
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: rgba(26, 26, 26, 0.4);
+      }
+
+      @keyframes pipelineFlow {
+        from { stroke-dashoffset: 140; }
+        to { stroke-dashoffset: 0; }
+      }
+
+      /* Hero: Artistic Minimalism - soft beige + paper/grain texture */
+      #hero {
+        background-color: #F2EFE9;
+      }
+      #hero::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+        pointer-events: none;
+        z-index: 0;
+      }
+      .hero-sphere {
+        background-color: #1A1A1A;
+        position: relative;
+      }
+      .hero-sphere::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='0.12'/%3E%3C/svg%3E");
+        pointer-events: none;
+        mix-blend-mode: overlay;
+      }
+      nav.nav-minimalism.nav-scrolled {
+        background-color: #F2EFE9;
+      }
+      nav.nav-minimalism.nav-scrolled::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+        pointer-events: none;
+        z-index: 0;
+      }
+      .nav-dropdown-texture {
+        position: relative;
+      }
+      .nav-dropdown-texture::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='nd'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23nd)' opacity='0.06'/%3E%3C/svg%3E");
+        pointer-events: none;
+        z-index: 0;
+      }
+      #about {
+        background-color: #F2EFE9;
+        border-bottom-color: rgba(26, 26, 26, 0.12) !important;
+      }
+      #about::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='ab'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23ab)' opacity='0.06'/%3E%3C/svg%3E");
+        pointer-events: none;
+        z-index: 0;
+      }
+      #project {
+        background-color: #F2EFE9;
+        border-bottom-color: rgba(26, 26, 26, 0.12) !important;
+      }
+      #project::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='pr'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23pr)' opacity='0.06'/%3E%3C/svg%3E");
+        pointer-events: none;
+        z-index: 0;
+      }
+      /* Berserker Section: 배경 없음 — #project와 동일한 #F2EFE9만 사용 (구분선·그라데이션 제거) */
+      .berserker-archival-section {
+        position: relative;
+      }
+      #regain-system {
+        background-color: #F2EFE9;
+        border-radius: 0.75rem;
+        position: relative;
+        padding: 2rem;
+        margin: 0 -1.5rem 3rem;
+        border: 0.5px solid rgba(42, 42, 42, 0.12);
+      }
+      @media (min-width: 768px) {
+        #regain-system { padding: 2.5rem 3rem; margin: 0 -3rem 3rem; }
+      }
+      #regain-system::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='rg'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23rg)' opacity='0.06'/%3E%3C/svg%3E");
+        pointer-events: none;
+        z-index: 0;
+      }
+      #regain-system > * { position: relative; z-index: 1; }
+      #smart-targeting {
+        background-color: #F2EFE9;
+        border-radius: 0.75rem;
+        position: relative;
+        padding: 2rem;
+        margin: 0 -1.5rem 3rem;
+        border: 0.5px solid rgba(42, 42, 42, 0.12);
+      }
+      @media (min-width: 768px) {
+        #smart-targeting { padding: 2.5rem 3rem; margin: 0 -3rem 3rem; }
+      }
+      #smart-targeting::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='st'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23st)' opacity='0.06'/%3E%3C/svg%3E");
+        pointer-events: none;
+        z-index: 0;
+      }
+      #smart-targeting > * { position: relative; z-index: 1; }
+      #chainsword-basic-action {
+        background-color: #F2EFE9;
+        border-radius: 0.75rem;
+        position: relative;
+        padding: 2rem;
+        margin: 0 -1.5rem 2rem;
+      }
+      @media (min-width: 768px) {
+        #chainsword-basic-action { padding: 2.5rem 3rem; margin: 0 -3rem 2rem; }
+      }
+      #chainsword-basic-action::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='cs'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23cs)' opacity='0.06'/%3E%3C/svg%3E");
+        pointer-events: none;
+        z-index: 0;
+      }
+      #chainsword-basic-action > * { position: relative; z-index: 1; }
+      #dualaxe-basic-action, #battleaxe-basic-action {
+        background-color: #F2EFE9;
+        border-radius: 0.75rem;
+        position: relative;
+        padding: 2rem;
+        margin: 0 -1.5rem 2rem;
+      }
+      @media (min-width: 768px) {
+        #dualaxe-basic-action, #battleaxe-basic-action { padding: 2.5rem 3rem; margin: 0 -3rem 2rem; }
+      }
+      #dualaxe-basic-action::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='da'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23da)' opacity='0.06'/%3E%3C/svg%3E");
+        pointer-events: none;
+        z-index: 0;
+      }
+      #battleaxe-basic-action::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='ba'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23ba)' opacity='0.06'/%3E%3C/svg%3E");
+        pointer-events: none;
+        z-index: 0;
+      }
+      #dualaxe-basic-action > *, #battleaxe-basic-action > * { position: relative; z-index: 1; }
+      #chainsword-stances, #dualaxe-stances, #battleaxe-stances {
+        background-color: #F2EFE9;
+        border-radius: 0.75rem;
+        position: relative;
+        padding: 2rem;
+        margin: 0 -1.5rem 2rem;
+      }
+      @media (min-width: 768px) {
+        #chainsword-stances, #dualaxe-stances, #battleaxe-stances { padding: 2.5rem 3rem; margin: 0 -3rem 2rem; }
+      }
+      #chainsword-stances::before, #dualaxe-stances::before, #battleaxe-stances::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='st'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23st)' opacity='0.06'/%3E%3C/svg%3E");
+        pointer-events: none;
+        z-index: 0;
+      }
+      #chainsword-stances > *, #dualaxe-stances > *, #battleaxe-stances > * { position: relative; z-index: 1; }
+
+      /* Archival data tables: vertical rules + header row/col tint */
+      .archival-table-wrap {
+        overflow-x: auto;
+        border: 0.5px solid rgba(42, 42, 42, 0.2);
+        border-radius: 0.75rem;
+        background: rgba(255, 255, 255, 0.22);
+      }
+      .archival-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      .archival-table thead th {
+        background-color: #E8E4D9;
+        color: rgba(42, 42, 42, 0.82);
+        border-bottom: 0.5px solid rgba(42, 42, 42, 0.22);
+      }
+      .archival-table thead th.sticky-col {
+        background-color: #DCD8CC;
+      }
+      .archival-table tbody td:first-child,
+      .archival-table tbody td.stub {
+        background-color: #EDE9DF;
+      }
+      .archival-table thead th.stub {
+        background-color: #E8E4D9;
+      }
+      .archival-table thead th:first-child.stub {
+        background-color: #DCD8CC;
+      }
+      .archival-table th + th,
+      .archival-table td + td {
+        border-left: 0.5px solid rgba(42, 42, 42, 0.16);
+      }
+      .archival-table tbody tr {
+        border-bottom: 0.5px solid rgba(42, 42, 42, 0.1);
+      }
+      .archival-table tbody tr:last-child {
+        border-bottom: none;
+      }
+      .archival-table tbody tr:hover td {
+        background-color: rgba(255, 255, 255, 0.42);
+      }
+      .archival-table tbody tr:hover td:first-child,
+      .archival-table tbody tr:hover td.stub {
+        background-color: #E8E4D9;
+      }
+      .archival-table .sticky-col {
+        position: sticky;
+        left: 0;
+        z-index: 2;
+        box-shadow: 6px 0 8px -6px rgba(42, 42, 42, 0.12);
+      }
+      .archival-table thead .sticky-col {
+        z-index: 3;
+      }
+      .archival-table thead tr:nth-child(2) th:first-child {
+        border-left: 0.5px solid rgba(42, 42, 42, 0.16);
+      }
+      .archival-table th.resource-col,
+      .archival-table td.resource-col {
+        width: 5.75rem;
+        min-width: 5.75rem;
+        text-align: center;
+        white-space: nowrap;
+      }
+      .archival-table-wrap--fit {
+        overflow-x: visible;
+      }
+      .archival-table--fit {
+        table-layout: fixed;
+        width: 100%;
+        min-width: 0;
+      }
+      .archival-table--fit col.col-skill,
+      .archival-table--fit .archival-table-width-row th.col-skill {
+        width: 7%;
+      }
+      .archival-table--fit col.col-content,
+      .archival-table--fit .archival-table-width-row th.col-content {
+        width: 28%;
+      }
+      .archival-table--fit col.col-resource,
+      .archival-table--fit .archival-table-width-row th.col-resource {
+        width: 3%;
+      }
+      .archival-table--fit .archival-table-width-row {
+        visibility: collapse;
+        height: 0;
+      }
+      .archival-table--fit .archival-table-width-row th {
+        padding: 0;
+        border: 0;
+        height: 0;
+        line-height: 0;
+        overflow: hidden;
+      }
+      .archival-table--fit .sticky-col {
+        position: static;
+        box-shadow: none;
+      }
+      .archival-table--fit th.resource-col,
+      .archival-table--fit td.resource-col {
+        width: auto;
+        min-width: 0;
+        max-width: none;
+        white-space: normal;
+        word-break: keep-all;
+        overflow-wrap: anywhere;
+        font-size: 9px;
+        line-height: 1.3;
+        padding-left: 0.2rem;
+        padding-right: 0.2rem;
+      }
+    </style>
+</head>
+  <body>
+    <noscript>
+      <div style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:#F2EFE9;color:#1A1A1A;padding:2rem;text-align:center;font-family:system-ui,sans-serif;">
+        <div style="max-width:380px;">
+          <p style="font-size:1.1rem;margin-bottom:1rem;">JavaScript를 켜주세요.</p>
+          <p style="color:#2D2D2D;">이 포트폴리오는 Vite 개발 서버로 실행해야 합니다. 터미널에서 <code style="background:rgba(26,26,26,0.1);padding:2px 6px;border-radius:4px;color:#c5a059;">npm run dev</code> 실행 후 브라우저에서 <strong style="color:#c5a059;">http://localhost:3000</strong> 접속.</p>
+        </div>
+      </div>
+    </noscript>
+    <div id="root">
+      <div id="preview-fallback" style="display:flex;align-items:center;justify-content:center;min-height:100vh;width:100%;padding:2rem;text-align:center;background:#F2EFE9;color:#1A1A1A;box-sizing:border-box;font-family:system-ui,sans-serif;">
+        <div style="max-width:380px;">
+          <p style="color:#2D2D2D;margin-bottom:1rem;font-size:1.1rem;">로딩 중…</p>
+          <p style="color:#2D2D2D;font-size:0.95rem;">안 보이면 브라우저에서 <strong style="color:#c5a059;">http://localhost:3000</strong> 을 직접 열어 보세요.</p>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>

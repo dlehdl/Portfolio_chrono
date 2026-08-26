@@ -1,0 +1,187 @@
+{
+    "name": "2h R2 2 Release",
+    "version": "1.14.1",
+    "labels": [
+        "Attack",
+        "Parriable",
+        "Special"
+    ],
+    "id": "032515",
+    "filename": "a258_032515",
+    "section": "a258",
+    "sourceKey": "a030_030515.hkt-32515",
+    "motionCategory": 258,
+    "attacks": [
+        "101400110:297"
+    ],
+    "users": [
+        {
+            "name": "Death Knight's Twin Axes",
+            "id": 14510000,
+            "type": "Weapon"
+        }
+    ],
+    "categories": [
+        "Axe"
+    ],
+    "hash": "1f9abe6e9a747e2216ce71df05aadd650a732afa",
+    "events": {
+        "activeFrames": [
+            {
+                "range": [
+                    12,
+                    15
+                ],
+                "type": "Attack",
+                "params": {
+                    "AttackIndex": 0,
+                    "AttackType": 0,
+                    "BehaviorJudgeID": 110,
+                    "AtkParamID": [
+                        "101400110:297"
+                    ]
+                }
+            }
+        ],
+        "cancels": [
+            {
+                "type": "Dodge",
+                "range": {
+                    "Regular": [
+                        27,
+                        66
+                    ]
+                }
+            },
+            {
+                "type": "FastGoods",
+                "range": {
+                    "Regular": [
+                        36,
+                        75
+                    ],
+                    "LightEquipLoad": [
+                        34,
+                        75
+                    ]
+                }
+            },
+            {
+                "type": "RightAttack",
+                "range": {
+                    "Regular": [
+                        36,
+                        75
+                    ]
+                }
+            },
+            {
+                "type": "FastWeaponArt",
+                "range": {
+                    "Regular": [
+                        36,
+                        75
+                    ]
+                }
+            },
+            {
+                "type": "LeftAttack",
+                "range": {
+                    "Regular": [
+                        37,
+                        75
+                    ]
+                }
+            },
+            {
+                "type": "Block",
+                "range": {
+                    "Regular": [
+                        37,
+                        75
+                    ]
+                }
+            },
+            {
+                "type": "Magic",
+                "range": {
+                    "Regular": [
+                        39,
+                        75
+                    ]
+                }
+            },
+            {
+                "type": "SwitchWeapon",
+                "range": {
+                    "Regular": [
+                        39,
+                        75
+                    ]
+                }
+            },
+            {
+                "type": "WeaponArt",
+                "range": {
+                    "Regular": [
+                        40,
+                        75
+                    ]
+                }
+            },
+            {
+                "type": "Goods",
+                "range": {
+                    "Regular": [
+                        40,
+                        75
+                    ]
+                }
+            },
+            {
+                "type": "Move",
+                "range": {
+                    "Regular": [
+                        47,
+                        75
+                    ]
+                }
+            },
+            {
+                "type": "Dodge",
+                "range": {
+                    "Regular": [
+                        27,
+                        75
+                    ]
+                }
+            }
+        ],
+        "spEffects": [
+            {
+                "range": [
+                    11,
+                    33
+                ],
+                "id": 45,
+                "mp": true
+            }
+        ],
+        "canBeParried": [
+            [
+                12,
+                13
+            ]
+        ],
+        "blend": [
+            [
+                0,
+                8
+            ]
+        ]
+    },
+    "cancelFrom": [
+        "HeavyAttackOnly",
+        "RightAttack"
+    ]
+}
