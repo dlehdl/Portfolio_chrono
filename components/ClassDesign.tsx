@@ -400,6 +400,8 @@ const RangeGrid: React.FC<{ specs: { angle?: string; radius?: string } | undefin
 const VideoReference = ({ label, color = "stone", isWide = false, variant, src }: { label: string, color?: string, isWide?: boolean; variant?: 'default' | 'editorial'; src?: string }) => {
     const videoRef = useRef<HTMLVideoElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
+    const [shouldLoad, setShouldLoad] = useState(false);
+    const [hasFrame, setHasFrame] = useState(false);
     const isEditorial = variant === 'editorial';
     const borderCls = isEditorial ? 'border-archival-ink/20' : `border-white/10 hover:border-${color}-500/50`;
     const innerCls = isWide ? "absolute inset-0" : (isEditorial ? "absolute inset-0" : "aspect-video relative");
@@ -407,26 +409,38 @@ const VideoReference = ({ label, color = "stone", isWide = false, variant, src }
     useEffect(() => {
         if (!src || !containerRef.current) return;
         const el = containerRef.current;
-        const play = () => { videoRef.current?.play().catch(() => {}); };
         const obs = new IntersectionObserver(
             ([entry]) => {
-                if (entry.isIntersecting) play();
-                else videoRef.current?.pause();
+                if (entry.isIntersecting) {
+                    setShouldLoad(true);
+                    videoRef.current?.play().catch(() => {});
+                } else {
+                    videoRef.current?.pause();
+                }
             },
-            { threshold: 0, rootMargin: '120px 0px' }
+            { threshold: 0.05, rootMargin: '240px 0px' }
         );
         obs.observe(el);
-        play();
         return () => obs.disconnect();
     }, [src]);
 
+    useEffect(() => {
+        if (!shouldLoad) return;
+        const v = videoRef.current;
+        if (!v) return;
+        const play = () => { v.muted = true; v.play().catch(() => {}); };
+        v.addEventListener('canplay', play);
+        play();
+        return () => v.removeEventListener('canplay', play);
+    }, [shouldLoad]);
+
     const handlePlay = () => { if (src && videoRef.current) { videoRef.current.paused ? videoRef.current.play() : videoRef.current.pause(); } };
 
-    const showOverlay = !src;
+    const showOverlay = !src || !hasFrame;
     return (
     <div ref={containerRef} className={`w-full h-full min-h-0 bg-black relative group overflow-hidden ${!isWide && !isEditorial ? 'border-b' : ''} ${isWide ? 'md:border-r border-b md:border-b-0' : ''} ${borderCls} transition-all duration-500`}>
         <div className={innerCls}>
-            {src && (
+            {src && shouldLoad && (
                 <video
                     ref={videoRef}
                     src={src}
@@ -435,8 +449,9 @@ const VideoReference = ({ label, color = "stone", isWide = false, variant, src }
                     muted
                     loop
                     autoPlay
-                    preload="auto"
-                    onCanPlay={() => { videoRef.current?.play().catch(() => {}); }}
+                    preload="metadata"
+                    onPlaying={() => setHasFrame(true)}
+                    onLoadedData={() => { videoRef.current?.play().catch(() => {}); }}
                     onClick={handlePlay}
                 />
             )}
