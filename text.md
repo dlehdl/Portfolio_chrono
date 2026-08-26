@@ -127,7 +127,7 @@ about:
       - '''귀군분투'' 단편 애니메이션 제작: 제23회 정동진독립영화제 초청'
 footer:
   name: LEE DOYI
-  tagline: Combat Designer Portfolio 2024
+  tagline: Combat Designer Portfolio 2026
 project:
   subtitle: 03. 프로젝트 개요
   title: 'Project: Chrono Odyssey'
