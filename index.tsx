@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { ErrorBoundary } from 'react-error-boundary';
-import App from './App';
 
 function ErrorFallback({ error }: { error: Error }) {
   return (
@@ -30,13 +29,20 @@ if (!rootElement) {
 document.getElementById('preview-fallback')?.remove();
 
 const root = ReactDOM.createRoot(rootElement);
-root.render(
-  <React.StrictMode>
-    <ErrorBoundary
-      fallbackRender={({ error }) => <ErrorFallback error={error} />}
-      onError={(err) => console.error('App error:', err)}
-    >
-      <App />
-    </ErrorBoundary>
-  </React.StrictMode>
-);
+
+import('./App')
+  .then(({ default: App }) => {
+    root.render(
+      <React.StrictMode>
+        <ErrorBoundary
+          fallbackRender={({ error }) => <ErrorFallback error={error} />}
+          onError={(err) => console.error('App error:', err)}
+        >
+          <App />
+        </ErrorBoundary>
+      </React.StrictMode>
+    );
+  })
+  .catch((err) => {
+    root.render(<ErrorFallback error={err instanceof Error ? err : new Error(String(err))} />);
+  });
