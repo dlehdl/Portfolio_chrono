@@ -216,7 +216,21 @@ ui:
     specialAction: 특수 액션
     basicCombo: 기본 공격 콤보
     movementAttack: 연계 공격
+    activeSkills: 액티브 스킬
+    treeA: A트리
+    treeB: B트리
+    skillEvolution: 액티브 스킬 강화
+    skillEvolutionNote: 액티브 스킬은 2가지의 선택 분기를 가지며, 최대 2단계까지 강화할 수 있습니다.
+    stageBasic: 기본
+    stageEnhanced: 1단계 강화
+    stageFinal: 2단계 강화
+    evolvedProficient: 숙련
+    evolvedExpert: 전문
+    nameColumn: 이름
+    rageColumn: 분노
+    skillEffect: 스킬 효과
     stance: 전투 태세
+    stanceNote: 4가지의 핵심 전투 컨셉에 따라 전투 태세가 달라집니다.
     combatFlow: 전투 흐름
     furyLink: 분노 자원 연계
     signatureVideo: 시그니처 컨셉 영상

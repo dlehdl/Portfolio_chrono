@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useRef, useEffect } from 'react';
+import React, { useMemo, useState, useRef, useEffect, useLayoutEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { WEAPON_DATA } from '../constants';
 import chainswordSpecialActionVideo from '../video/Chainsword_Specialaction.mp4';
@@ -1214,6 +1214,373 @@ const WeaponPassiveSkillTable: React.FC<{ passiveTree: PassiveNode[]; side: stri
     );
 };
 
+/** 기본 액션 ↔ 전투 태세 사이: A/B트리 액티브 스킬 인덱스 카드 */
+const ActiveSkillNameCard: React.FC<{ index: number; skill: ActiveSkillDetail }> = ({ index, skill }) => (
+    <div
+        className="relative overflow-hidden flex flex-col border border-archival-ink/30 hover:border-archival-ink/40 min-w-0"
+        style={{ backgroundColor: 'rgba(220,216,204,0.6)', borderWidth: '0.5px' }}
+    >
+        <div className="flex items-center gap-3 p-4 sm:p-5">
+            <div
+                className="w-8 h-8 border border-archival-ink/35 flex items-center justify-center shrink-0"
+                style={{ borderWidth: '0.5px' }}
+                aria-hidden
+            >
+                <span className="text-[11px] font-archival-mono text-archival-ink/80">{String(index).padStart(2, '0')}</span>
+            </div>
+            <div className="min-w-0">
+                <h4 className="font-archival-serif font-semibold text-archival-ink text-[15px] sm:text-base tracking-wide leading-snug">
+                    {skill.name}
+                </h4>
+                <span className="mt-0.5 block text-[9px] font-archival-mono text-archival-ink/45 tracking-wider uppercase">
+                    {skill.id}
+                </span>
+            </div>
+        </div>
+        <div className="absolute bottom-0 left-0 w-full h-0.5 bg-archival-ink/20" />
+    </div>
+);
+
+const WeaponActiveSkillOverview: React.FC<{ weapon: SkillTree; sectionId: string }> = ({ weapon, sectionId }) => {
+    const sections = WEAPON_TREE_SECTIONS[weapon.name];
+    if (!sections) return null;
+
+    const treeA = sections.find((s) => s.passiveSide === 'A');
+    const treeB = sections.find((s) => s.passiveSide === 'B');
+
+    const resolve = (ids: readonly string[] | undefined) =>
+        (ids ?? [])
+            .map((id) => weapon.activeSkills.find((s) => s.id === id))
+            .filter((s): s is ActiveSkillDetail => Boolean(s));
+
+    const rows = [
+        { key: 'A', label: ui.treeA ?? 'A트리', skills: resolve(treeA?.skillIds) },
+        { key: 'B', label: ui.treeB ?? 'B트리', skills: resolve(treeB?.skillIds) },
+    ].filter((row) => row.skills.length > 0);
+
+    if (rows.length === 0) return null;
+
+    return (
+        <div id={sectionId} className="scroll-mt-32 space-y-10 sm:space-y-12">
+            {rows.map((row) => (
+                <div key={row.key}>
+                    <div className="flex items-center gap-2 mb-5">
+                        <div className="w-8 h-px bg-archival-ink/25" style={{ height: '0.5px' }} />
+                        <span className="text-xs font-archival-mono font-semibold text-archival-ink uppercase tracking-[0.2em]">
+                            {row.label}
+                        </span>
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+                        {row.skills.map((skill, i) => (
+                            <ActiveSkillNameCard key={skill.id} index={i + 1} skill={skill} />
+                        ))}
+                    </div>
+                </div>
+            ))}
+        </div>
+    );
+};
+
+type SkillEvoCell = {
+  name: string;
+  resource?: string;
+  description: string;
+  intent?: string;
+};
+
+const extractTreeName = (pathName?: string) => {
+  if (!pathName) return '';
+  const idx = pathName.lastIndexOf(':');
+  return (idx >= 0 ? pathName.slice(idx + 1) : pathName).trim();
+};
+
+const getSkillBaseCell = (skill: ActiveSkillDetail): SkillEvoCell => ({
+  name: skill.name,
+  resource: skill.specs.resource,
+  description:
+    skill.description
+    || (skill.specs ? `${skill.specs.damage} · 범위 ${skill.specs.radius} · 각도 ${skill.specs.angle}` : ''),
+  intent: skill.designIntent,
+});
+
+const getSkillPathStageCell = (
+  skill: ActiveSkillDetail,
+  pathKey: 'pathA' | 'pathB',
+  stage: 0 | 1,
+  prefix: string,
+): SkillEvoCell | null => {
+  const path = skill.evolution?.[pathKey];
+  const node = path?.nodes[stage];
+  if (!path || !node) return null;
+  const baseResource = skill.specs.resource;
+  const stage1Resource = path.nodes[0]?.specOverride?.resource ?? baseResource;
+  const resource = stage === 0 ? stage1Resource : (path.nodes[1]?.specOverride?.resource ?? stage1Resource);
+  return {
+    name: `${prefix} ${skill.name}: ${extractTreeName(path.name)}`,
+    resource,
+    description: node.description ?? '',
+    intent: node.insight,
+  };
+};
+
+const SkillEvolutionMiniTable: React.FC<{ cell: SkillEvoCell }> = ({ cell }) => {
+  const nameLabel = ui.nameColumn ?? '이름';
+  const rageLabel = ui.rageColumn ?? '분노';
+  const effectLabel = ui.skillEffect ?? '스킬 효과';
+  const intentLabel = ui.designIntent ?? '기획 의도';
+  const thCls = 'py-1.5 px-2 text-[9px] font-archival-mono font-medium tracking-wider uppercase text-archival-ink/80 text-left';
+  const tdCls = 'py-2 px-2 align-top text-[11px] leading-snug text-archival-ink-deep/90';
+
+  return (
+    <div className="archival-table-wrap overflow-hidden min-w-0 w-full">
+      <table className="archival-table w-full text-sm table-fixed">
+        <colgroup>
+          <col />
+          <col className="w-[5.5rem]" />
+        </colgroup>
+        <thead>
+          <tr>
+            <th className={`${thCls} w-[70%]`}>{nameLabel}</th>
+            <th className={`${thCls} text-center`}>{rageLabel}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td className={`${tdCls} font-archival-serif text-archival-ink`}>{cell.name}</td>
+            <td className={`${tdCls} font-archival-mono text-center`}>{formatSkillResource(cell.resource)}</td>
+          </tr>
+          <tr>
+            <th colSpan={2} className={`stub ${thCls} border-t border-archival-ink/15`} style={{ borderTopWidth: '0.5px' }}>
+              {effectLabel}
+            </th>
+          </tr>
+          <tr>
+            <td colSpan={2} className={tdCls}>{cell.description || '—'}</td>
+          </tr>
+          <tr>
+            <th colSpan={2} className={`stub ${thCls} border-t border-archival-ink/15`} style={{ borderTopWidth: '0.5px' }}>
+              {intentLabel}
+            </th>
+          </tr>
+          <tr>
+            <td colSpan={2} className={`${tdCls} text-archival-ink/70`}>{cell.intent || '—'}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  );
+};
+
+type ForkGeom = {
+  w: number;
+  h: number;
+  x0: number;
+  y0: number;
+  x1: number;
+  yA: number;
+  yB: number;
+  midX: number;
+};
+
+const EvolutionForkOverlay: React.FC<{ geom: ForkGeom | null }> = ({ geom }) => {
+  if (!geom) return null;
+  const { w, h, x0, y0, x1, yA, yB, midX } = geom;
+  const arrow = (x: number, y: number) => `M ${x - 7} ${y - 3.5} L ${x} ${y} L ${x - 7} ${y + 3.5}`;
+  return (
+    <svg
+      className="hidden lg:block absolute inset-0 w-full h-full pointer-events-none text-archival-ink/45 overflow-visible"
+      viewBox={`0 0 ${w} ${h}`}
+      fill="none"
+      aria-hidden
+    >
+      <path
+        d={`M ${x0} ${y0} H ${midX} M ${midX} ${yA} V ${yB} M ${midX} ${yA} H ${x1} M ${midX} ${yB} H ${x1}`}
+        stroke="currentColor"
+        strokeWidth="1"
+      />
+      <circle cx={midX} cy={yA} r="2.5" fill="#F2EFE9" stroke="currentColor" strokeWidth="1" />
+      <circle cx={midX} cy={yB} r="2.5" fill="#F2EFE9" stroke="currentColor" strokeWidth="1" />
+      <path d={arrow(x1, yA)} stroke="currentColor" strokeWidth="1" />
+      <path d={arrow(x1, yB)} stroke="currentColor" strokeWidth="1" />
+    </svg>
+  );
+};
+
+const EvolutionStageArrow: React.FC = () => (
+  <svg viewBox="0 0 24 12" className="hidden lg:block w-6 h-3 shrink-0 text-archival-ink/40" aria-hidden>
+    <line x1="0" y1="6" x2="16" y2="6" stroke="currentColor" strokeWidth="1" />
+    <path d="M13 2 L20 6 L13 10" fill="none" stroke="currentColor" strokeWidth="1" />
+  </svg>
+);
+
+const SkillEvolutionDiagram: React.FC<{ skill: ActiveSkillDetail }> = ({ skill }) => {
+  const proficient = ui.evolvedProficient ?? '숙련';
+  const expert = ui.evolvedExpert ?? '전문';
+  const base = getSkillBaseCell(skill);
+  const pathA1 = getSkillPathStageCell(skill, 'pathA', 0, proficient);
+  const pathA2 = getSkillPathStageCell(skill, 'pathA', 1, expert);
+  const pathB1 = getSkillPathStageCell(skill, 'pathB', 0, proficient);
+  const pathB2 = getSkillPathStageCell(skill, 'pathB', 1, expert);
+  const treeA = extractTreeName(skill.evolution?.pathA?.name);
+  const treeB = extractTreeName(skill.evolution?.pathB?.name);
+
+  const stageLabelCls = 'text-[10px] font-archival-mono font-semibold text-archival-ink/70 uppercase tracking-[0.2em] mb-2';
+
+  const rootRef = useRef<HTMLDivElement>(null);
+  const basicRef = useRef<HTMLDivElement>(null);
+  const enhARef = useRef<HTMLDivElement>(null);
+  const enhBRef = useRef<HTMLDivElement>(null);
+  const [forkGeom, setForkGeom] = useState<ForkGeom | null>(null);
+
+  useLayoutEffect(() => {
+    const root = rootRef.current;
+    if (!root) return;
+
+    const measure = () => {
+      const r = rootRef.current?.getBoundingClientRect();
+      const br = basicRef.current?.getBoundingClientRect();
+      const ar = enhARef.current?.getBoundingClientRect();
+      const bb = enhBRef.current?.getBoundingClientRect();
+      if (!r || !br || !ar || !bb || r.width === 0) return;
+      const x0 = br.right - r.left;
+      const y0 = br.top + br.height / 2 - r.top;
+      const x1 = ar.left - r.left;
+      const yA = ar.top + ar.height / 2 - r.top;
+      const yB = bb.top + bb.height / 2 - r.top;
+      setForkGeom({
+        w: r.width,
+        h: r.height,
+        x0,
+        y0,
+        x1,
+        yA,
+        yB,
+        midX: x0 + (x1 - x0) / 2,
+      });
+    };
+
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(root);
+    window.addEventListener('resize', measure);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener('resize', measure);
+    };
+  }, [skill.id]);
+
+  const branch = (
+    label: string,
+    stage1: SkillEvoCell | null,
+    stage2: SkillEvoCell | null,
+    stage1Ref?: React.RefObject<HTMLDivElement | null>,
+  ) => {
+    if (!stage1 && !stage2) return null;
+    return (
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.5rem_1fr] lg:items-center gap-3 lg:gap-2 min-w-0">
+        {stage1 && (
+          <div ref={stage1Ref} className="min-w-0">
+            <p className="lg:hidden text-[9px] font-archival-mono text-archival-ink/50 tracking-wider uppercase mb-1.5">
+              {ui.stageEnhanced ?? '1단계 강화'} · {label}
+            </p>
+            <SkillEvolutionMiniTable cell={stage1} />
+          </div>
+        )}
+        {stage1 && stage2 && (
+          <div className="flex justify-center">
+            <EvolutionStageArrow />
+          </div>
+        )}
+        {stage2 && (
+          <div className="min-w-0">
+            <p className="lg:hidden text-[9px] font-archival-mono text-archival-ink/50 tracking-wider uppercase mb-1.5">
+              {ui.stageFinal ?? '2단계 강화'} · {label}
+            </p>
+            <SkillEvolutionMiniTable cell={stage2} />
+          </div>
+        )}
+      </div>
+    );
+  };
+
+  return (
+    <div className="min-w-0">
+      <div className="flex items-baseline gap-3 mb-4">
+        <h4 className="font-archival-serif font-semibold text-archival-ink text-base tracking-wide">{skill.name}</h4>
+        <span className="text-[9px] font-archival-mono text-archival-ink/45 tracking-wider uppercase">{skill.id}</span>
+      </div>
+
+      <div ref={rootRef} className="relative min-w-0">
+        <div className="flex flex-col gap-4 lg:grid lg:grid-cols-[minmax(0,0.9fr)_2.5rem_minmax(0,2.2fr)] lg:grid-rows-[auto_auto] lg:gap-0 min-w-0">
+          <p className={`hidden lg:block lg:col-start-1 lg:row-start-1 ${stageLabelCls}`}>{ui.stageBasic ?? '기본'}</p>
+          <div className="hidden lg:block lg:col-start-2 lg:row-start-1" />
+          <div className="hidden lg:grid lg:col-start-3 lg:row-start-1 grid-cols-[1fr_1.5rem_1fr] gap-2">
+            <span className={stageLabelCls}>{ui.stageEnhanced ?? '1단계 강화'}</span>
+            <span />
+            <span className={stageLabelCls}>{ui.stageFinal ?? '2단계 강화'}</span>
+          </div>
+
+          <div className="lg:col-start-1 lg:row-start-2 lg:flex lg:items-center">
+            <div ref={basicRef} className="w-full">
+              <p className={`lg:hidden ${stageLabelCls}`}>{ui.stageBasic ?? '기본'}</p>
+              <SkillEvolutionMiniTable cell={base} />
+            </div>
+          </div>
+
+          <div className="hidden lg:block lg:col-start-2 lg:row-start-2" />
+
+          <div className="lg:col-start-3 lg:row-start-2 flex flex-col gap-5 min-w-0">
+            {branch(treeA, pathA1, pathA2, enhARef)}
+            {branch(treeB, pathB1, pathB2, enhBRef)}
+          </div>
+        </div>
+        <EvolutionForkOverlay geom={forkGeom} />
+      </div>
+    </div>
+  );
+};
+
+const WeaponActiveSkillEvolution: React.FC<{ weapon: SkillTree; sectionId: string }> = ({ weapon, sectionId }) => {
+  const sections = WEAPON_TREE_SECTIONS[weapon.name];
+  if (!sections) return null;
+
+  const treeA = sections.find((s) => s.passiveSide === 'A');
+  const treeB = sections.find((s) => s.passiveSide === 'B');
+  const resolve = (ids: readonly string[] | undefined) =>
+    (ids ?? [])
+      .map((id) => weapon.activeSkills.find((s) => s.id === id))
+      .filter((s): s is ActiveSkillDetail => Boolean(s));
+
+  const rows = [
+    { key: 'A', label: ui.treeA ?? 'A트리', skills: resolve(treeA?.skillIds) },
+    { key: 'B', label: ui.treeB ?? 'B트리', skills: resolve(treeB?.skillIds) },
+  ].filter((row) => row.skills.length > 0);
+
+  if (rows.length === 0) return null;
+
+  return (
+    <div id={sectionId} className="scroll-mt-32">
+      <div className="space-y-14 sm:space-y-16">
+        {rows.map((row) => (
+          <div key={row.key}>
+            <div className="flex items-center gap-2 mb-8">
+              <div className="w-8 h-px bg-archival-ink/25" style={{ height: '0.5px' }} />
+              <span className="text-xs font-archival-mono font-semibold text-archival-ink uppercase tracking-[0.2em]">
+                {row.label}
+              </span>
+            </div>
+            <div className="space-y-12 sm:space-y-14">
+              {row.skills.map((skill) => (
+                <SkillEvolutionDiagram key={skill.id} skill={skill} />
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
 /** 트리 카드 하단에 이어지는 액티브/패시브 표 카드 */
 const TreeSkillDetailCards: React.FC<{
     skills: ActiveSkillDetail[];
@@ -1271,6 +1638,8 @@ const ClassDesign: React.FC = () => {
   const WEAPON_IDS = ['class-chainsword', 'class-dualaxe', 'class-battleaxe'];
   const SUB_TITLES = ['4.1', '4.2', '4.3'];
   const WEAPON_BASIC_ACTION_IDS: Record<string, string> = { '사슬검': 'chainsword-basic-action', '쌍도끼': 'dualaxe-basic-action', '전투도끼': 'battleaxe-basic-action' };
+  const WEAPON_ACTIVE_SKILL_IDS: Record<string, string> = { '사슬검': 'chainsword-active-skills', '쌍도끼': 'dualaxe-active-skills', '전투도끼': 'battleaxe-active-skills' };
+  const WEAPON_EVOLUTION_IDS: Record<string, string> = { '사슬검': 'chainsword-skill-evolution', '쌍도끼': 'dualaxe-skill-evolution', '전투도끼': 'battleaxe-skill-evolution' };
   const WEAPON_STANCES_IDS: Record<string, string> = { '사슬검': 'chainsword-stances', '쌍도끼': 'dualaxe-stances', '전투도끼': 'battleaxe-stances' };
   const isLightWeapon = (name: string) => ['사슬검', '쌍도끼', '전투도끼'].includes(name);
 
@@ -1461,14 +1830,50 @@ const ClassDesign: React.FC = () => {
                 })()}
                 </div>
                 ) : null}
+                {/* ACTIVE SKILLS OVERVIEW — 기본 액션과 전투 태세 사이 */}
+                {WEAPON_TREE_SECTIONS[weapon.name] ? (
+                    <div className="mb-32">
+                        <div className="flex items-center gap-3 mb-12">
+                            <h3 className={`text-lg font-semibold flex items-center gap-3 ${isLightWeapon(weapon.name) ? 'font-archival-serif text-archival-ink' : 'font-serif font-bold text-[#1A1A1A]'}`}>
+                                <Grid3X3 className={isLightWeapon(weapon.name) ? 'text-archival-ink/70' : 'text-[#2D2D2D]'} /> {ui.activeSkills ?? '액티브 스킬'}
+                            </h3>
+                            <div className={`h-px flex-1 ${isLightWeapon(weapon.name) ? 'bg-archival-ink/20' : 'bg-[#1A1A1A]/25'}`} style={isLightWeapon(weapon.name) ? { height: '0.5px' } : undefined} />
+                        </div>
+                        <WeaponActiveSkillOverview
+                            weapon={weapon}
+                            sectionId={WEAPON_ACTIVE_SKILL_IDS[weapon.name]}
+                        />
+                    </div>
+                ) : null}
+                {/* ACTIVE SKILL EVOLUTION — 액티브 스킬과 전투 태세 사이 */}
+                {WEAPON_TREE_SECTIONS[weapon.name] ? (
+                    <div className="mb-32">
+                        <div className="flex items-center gap-3 mb-4">
+                            <h3 className={`text-lg font-semibold flex items-center gap-3 ${isLightWeapon(weapon.name) ? 'font-archival-serif text-archival-ink' : 'font-serif font-bold text-[#1A1A1A]'}`}>
+                                <GitFork className={isLightWeapon(weapon.name) ? 'text-archival-ink/70' : 'text-[#2D2D2D]'} /> {ui.skillEvolution ?? '액티브 스킬 강화'}
+                            </h3>
+                            <div className={`h-px flex-1 ${isLightWeapon(weapon.name) ? 'bg-archival-ink/20' : 'bg-[#1A1A1A]/25'}`} style={isLightWeapon(weapon.name) ? { height: '0.5px' } : undefined} />
+                        </div>
+                        <p className="text-[11px] font-archival-mono text-archival-ink/55 leading-relaxed tracking-wide mb-12">
+                            {ui.skillEvolutionNote ?? '액티브 스킬은 2가지의 선택 분기를 가지며, 최대 2단계까지 강화할 수 있습니다.'}
+                        </p>
+                        <WeaponActiveSkillEvolution
+                            weapon={weapon}
+                            sectionId={WEAPON_EVOLUTION_IDS[weapon.name]}
+                        />
+                    </div>
+                ) : null}
                 {/* COMBAT STANCES */}
                 <div className="mb-32">
-                    <div className="flex items-center gap-3 mb-10">
+                    <div className="flex items-center gap-3 mb-4">
                         <h3 className={`text-lg font-semibold flex items-center gap-3 ${isLightWeapon(weapon.name) ? 'font-archival-serif text-archival-ink' : 'font-serif font-bold text-[#1A1A1A]'}`}>
                             <Layers className={isLightWeapon(weapon.name) ? 'text-archival-ink/70' : 'text-[#2D2D2D]'} /> {ui.stance ?? '전투 태세'}
                         </h3>
                         <div className={`h-px flex-1 ${isLightWeapon(weapon.name) ? 'bg-archival-ink/20' : 'bg-[#1A1A1A]/25'}`} style={isLightWeapon(weapon.name) ? { height: '0.5px' } : undefined} />
                     </div>
+                    <p className="text-[11px] font-archival-mono text-archival-ink/55 leading-relaxed tracking-wide mb-10">
+                        {ui.stanceNote ?? '4가지의 핵심 전투 컨셉에 따라 전투 태세가 달라집니다.'}
+                    </p>
                     <CombatStanceSection
                         stances={weapon.stances}
                         sectionId={WEAPON_STANCES_IDS[weapon.name]}
