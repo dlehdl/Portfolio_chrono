@@ -156,7 +156,7 @@ berserker:
         액션 매커니즘 설계
     - title: Combat System
       subtitle: 전투 시스템 기획
-      desc: 전투 시스템 기획
+      desc: 리게인, 스마트 타겟팅 시스템 기획
     - title: Build Structure
       subtitle: 패시브 빌드 수립
       desc: |-
@@ -449,7 +449,7 @@ weapons:
       A-2:
         name: 척력
         concept: 거리 유지 및 통제
-        actionSummary: 거리 봉쇄 액션
+        actionSummary: 사슬로 적을 튕겨내는 액션
         keywords:
           - 접근봉쇄
           - 군중제어(cc)
@@ -487,7 +487,7 @@ weapons:
       B-2:
         name: 중압
         concept: 무력화 및 강타
-        actionSummary: 무력화 강타 액션
+        actionSummary: 사슬을 세로로 내려치는 액션
         keywords:
           - 무력화특화
           - 경직연계
@@ -826,7 +826,7 @@ weapons:
       A-1:
         name: 광전사
         concept: 폭발적 화력
-        actionSummary: 변신 액션
+        actionSummary: 변신, 주먹 액션
         keywords:
           - 폭발적 화력
           - 분노 회복

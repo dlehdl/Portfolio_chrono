@@ -1368,7 +1368,7 @@ const SystemDesign: React.FC = () => {
                <BarVisualizer 
                    type="hit" 
                    label="상태 1: 누적 (Accumulate)" 
-                   description="피격 시 체력이 감소하고, 감소한 만큼 붉은색 리게인 게이지가 즉시 생성됩니다."
+                   description="피격 시 체력이 감소하고, 감소한 만큼 리게인 게이지가 즉시 생성됩니다."
                    theme="light"
                />
                <BarVisualizer 
