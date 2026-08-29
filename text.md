@@ -430,6 +430,7 @@ weapons:
       A-1:
         name: 섬영
         concept: 근접 난무 특화
+        actionSummary: 변칙적인 액션
         keywords:
           - 고속연타
           - 치명타특화
@@ -448,6 +449,7 @@ weapons:
       A-2:
         name: 척력
         concept: 거리 유지 및 통제
+        actionSummary: 거리 봉쇄 액션
         keywords:
           - 접근봉쇄
           - 군중제어(cc)
@@ -466,6 +468,7 @@ weapons:
       B-1:
         name: 원무
         concept: 광역 지속 딜링
+        actionSummary: 광역 회전 액션
         keywords:
           - 광역
           - 처치보상
@@ -484,6 +487,7 @@ weapons:
       B-2:
         name: 중압
         concept: 무력화 및 강타
+        actionSummary: 무력화 강타 액션
         keywords:
           - 무력화특화
           - 경직연계
@@ -822,6 +826,7 @@ weapons:
       A-1:
         name: 광전사
         concept: 폭발적 화력
+        actionSummary: 변신 액션
         keywords:
           - 폭발적 화력
           - 분노 회복
@@ -840,6 +845,7 @@ weapons:
       A-2:
         name: 추격
         concept: 스택 유지
+        actionSummary: 도끼를 던지고 쫓아가는 액션
         keywords:
           - 스택 유지
           - 공속 시너지
@@ -858,6 +864,7 @@ weapons:
       B-1:
         name: 혈투
         concept: 회피 반격
+        actionSummary: 회피 반격 액션
         keywords:
           - 말뚝 딜링
           - 회피 반격
@@ -876,6 +883,7 @@ weapons:
       B-2:
         name: 도살
         concept: 무한 콤보
+        actionSummary: 무한 콤보 액션
         keywords:
           - 무한 콤보
           - 후딜 전용
@@ -1214,6 +1222,7 @@ weapons:
       A-1:
         name: 축적
         concept: 그릇 확장
+        actionSummary: 휠윈드 액션
         keywords:
           - 그릇 확장
           - 지속딜
@@ -1232,6 +1241,7 @@ weapons:
       A-2:
         name: 분쇄
         concept: 경직 활용
+        actionSummary: 순간 가속 액션
         keywords:
           - 경직 활용
           - 빠른 수급
@@ -1250,6 +1260,7 @@ weapons:
       B-1:
         name: 응징
         concept: 피격 환원
+        actionSummary: 견뎌내는 액션
         keywords:
           - 피격 강화
           - 피해 환원
@@ -1268,6 +1279,7 @@ weapons:
       B-2:
         name: 파쇄
         concept: 경직 면역
+        actionSummary: 전차처럼 돌파하는 액션
         keywords:
           - 경직 면역
           - 패널티 상쇄

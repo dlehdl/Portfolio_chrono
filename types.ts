@@ -16,6 +16,8 @@ export interface Stance {
   flowSteps?: string[];
   /** 설명 불릿 (줄글 X) */
   descriptionPoints?: string[];
+  /** 핵심 액션 한 줄 요약 (컨셉 카드) */
+  actionSummary?: string;
   /** 분노 자원 연계: 조건/트리거 */
   furyTrigger?: string;
   /** 분노 연계 효과 */

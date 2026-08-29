@@ -37,6 +37,7 @@ function applyStanceTexts(stances: Stance[], weaponSlug: string): Stance[] {
       furyTrigger: o.furyTrigger ?? s.furyTrigger,
       furyEffect: o.furyEffect ?? s.furyEffect,
       furyRisk: o.furyRisk ?? s.furyRisk,
+      actionSummary: o.actionSummary ?? s.actionSummary,
     };
   });
 }

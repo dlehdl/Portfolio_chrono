@@ -662,6 +662,36 @@ const StanceCard: React.FC<{ stance: Stance; theme?: 'dark' | 'light' }> = ({ st
     );
 };
 
+const StanceActionSummaryCard: React.FC<{ index: number; stance: Stance }> = ({ index, stance }) => (
+    <div
+        className="relative overflow-hidden flex flex-col items-center justify-center text-center border border-archival-ink/30 py-7 px-4 min-w-0"
+        style={{ backgroundColor: 'rgba(220,216,204,0.6)', borderWidth: '0.5px' }}
+    >
+        <span className="font-archival-serif text-3xl sm:text-4xl text-archival-ink tracking-wide">
+            {String(index).padStart(2, '0')}
+        </span>
+        <h4 className="mt-3 font-archival-serif font-semibold text-archival-ink text-lg tracking-wide">
+            {stance.name}
+        </h4>
+        <div className="w-8 bg-archival-ink/35 my-3" style={{ height: '0.5px' }} />
+        <p className="text-[11px] font-archival-mono text-archival-ink/60 tracking-wide">
+            {stance.actionSummary ?? stance.concept}
+        </p>
+        <div className="absolute bottom-0 left-0 w-full h-0.5 bg-archival-ink/20" />
+    </div>
+);
+
+const StanceActionSummaryRow: React.FC<{ stances: Stance[] }> = ({ stances }) => {
+    if (stances.length === 0) return null;
+    return (
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-10">
+            {stances.map((stance, i) => (
+                <StanceActionSummaryCard key={stance.id} index={i + 1} stance={stance} />
+            ))}
+        </div>
+    );
+};
+
 // --- COMBAT STANCE (Horizontal Expanding Cards — Organic Archival Sci‑Fi) ---
 
 const ARCHIVAL_NOISE =
@@ -1871,9 +1901,10 @@ const ClassDesign: React.FC = () => {
                         </h3>
                         <div className={`h-px flex-1 ${isLightWeapon(weapon.name) ? 'bg-archival-ink/20' : 'bg-[#1A1A1A]/25'}`} style={isLightWeapon(weapon.name) ? { height: '0.5px' } : undefined} />
                     </div>
-                    <p className="text-[11px] font-archival-mono text-archival-ink/55 leading-relaxed tracking-wide mb-10">
+                    <p className="text-[11px] font-archival-mono text-archival-ink/55 leading-relaxed tracking-wide mb-8">
                         {ui.stanceNote ?? '4가지의 핵심 전투 컨셉에 따라 전투 태세가 달라집니다.'}
                     </p>
+                    <StanceActionSummaryRow stances={weapon.stances} />
                     <CombatStanceSection
                         stances={weapon.stances}
                         sectionId={WEAPON_STANCES_IDS[weapon.name]}

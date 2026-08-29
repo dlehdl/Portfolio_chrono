@@ -35,6 +35,7 @@ export function fieldGroup(path: string): string {
 
 const KEY_KO: Record<string, string> = {
   resource: '자원',
+  actionSummary: '핵심 액션',
   baseDescription: '기본 설명',
   designIntent: '기획 의도',
   insight: '기획 의도',
