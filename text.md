@@ -622,7 +622,7 @@ weapons:
             nodes:
               - tier: 1
                 name: 난격
-                description: 분노 소모량 증가. 착지 후 돌진, 사슬검을 짧게 잡아 휘두르며 5타 , 260% 피해
+                description: 착지 후 돌진, 사슬검을 짧게 잡아 휘두르며 5타 , 260% 피해
                 insight: 다단히트로 치명타 피해를 노린 필살기
                 resource: 분노 60
               - tier: 2
@@ -781,7 +781,7 @@ weapons:
                 resource: 분노 50
               - tier: 2
                 name: 추가 필요
-                description: 분노 소모량 증가. 마지막 타격 적중 시 적 스태미나 크게 감소
+                description: 마지막 타격 적중 시 적 스태미나 크게 감소
                 insight: '분노를 더 태워 마지막 타로 가드브레이크 유도 '
                 resource: 분노 55
   dualaxe:
@@ -913,7 +913,7 @@ weapons:
             nodes:
               - tier: 1
                 name: 추가 필요
-                description: 분노 소모량 증가. 왼손으로 베고 오른손으로 내리쳐 120%·155% 피해
+                description: 왼손으로 베고 오른손으로 내리쳐 120%·155% 피해
                 insight: 분노를 더 태워 피해를 키운 주력기
                 resource: 분노 32
               - tier: 2
@@ -997,7 +997,7 @@ weapons:
             nodes:
               - tier: 1
                 name: 추가 필요
-                description: 공격 속도 18% 증가. 분노 소모량 감소
+                description: 공격 속도 18% 증가
                 insight: 소모 감소와 공속으로 스택 유지에 유리하게 함
                 resource: 분노 14
               - tier: 2
@@ -1463,7 +1463,7 @@ weapons:
             nodes:
               - tier: 1
                 name: 추가 필요
-                description: 충전 불가능한 대신 공격 속도 18% 증가. 분노 소모량 감소
+                description: 충전 불가능한 대신 공격 속도 18% 증가
                 insight: 충전 삭제·소모 감소로 콤보 접착을 빠르게 함
                 resource: 분노 14
               - tier: 2
