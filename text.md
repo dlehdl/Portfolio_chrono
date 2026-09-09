@@ -1202,8 +1202,8 @@ weapons:
           designIntent: 내려찍기 결산. 넓은 판정과 늦은 캔슬로 한 방의 리스크를 남김.
     specialAction:
       name: 돌진
-      description: 적을 향해 돌진. 유지 중 스태미나 소모, 피격 시에도 스태미나 소모(오버밸런스 방지). 타격마다 분노 5 생성.
-      mechanic: 유지·피격 시 스태미나 소모. 타격마다 분노 5 생성
+      description: 적을 향해 돌진. 유지 중 스태미나 소모, 피격 시에도 스태미나 소모(오버밸런스 방지). 타격마다 분노 3 생성.
+      mechanic: 유지·피격 시 스태미나 소모. 타격마다 분노 3 생성
       designIntent: 스태미나를 태우며 분노를 쌓는 접근기
     movementAttackSteps:
       - step: 1
@@ -1685,7 +1685,7 @@ passives:
   CS-T2-A3:
     name: 활력
     summary: 추가 필요
-    description: 치명타 발생 시마다 분노 5 생성
+    description: 치명타 발생 시마다 분노 7 생성
     designerIntent: '치명타 발생 -> 자원 수급으로 순환 유도 '
   CS-T2-A2:
     name: 제압의 숨
