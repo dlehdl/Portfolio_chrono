@@ -408,7 +408,7 @@ weapons:
           designIntent: 연속 공격의 마지막으로, 리스크에 기반하여 기본 공격 중 가장 큰 피해량을 가짐.
     specialAction:
       name: 특수 액션
-      description: 사슬을 던져 적을 끌어오거나, 벽 또는 적에 고정하여 돌진.
+      description: 사슬을 던져 적을 끌어오거나, 벽 또는 적에 고정하여 돌진. 분노 10 생성
       mechanic: 적중 시 분노 자원 획득, Hold 입력 시 홀딩 상태 유지
       designIntent: '사슬의 특성을 활용해 접근기, 당겨오는 기술로 사용 '
       frameDataLabel: 적을 끌어당길 때
@@ -762,7 +762,7 @@ weapons:
             nodes:
               - tier: 1
                 name: 추가 필요
-                description: 연속 사용 시마다 범위·속도 증가 (총 3단계). 분노 소모량 증가
+                description: 연속 사용 시마다 범위·속도 증가 (총 3단계)
                 insight: '연속 사용 시 효과 증가'
                 resource: 분노 45
               - tier: 2
@@ -787,7 +787,7 @@ weapons:
   dualaxe:
     name: 쌍도끼
     description: 광기 스택을 쌓고 소모하며 변신·연계 콤보를 운용하는 쌍도끼.
-    mechanic: '특수액션 돌진: 피격 시 [광기] 획득(최대 10중첩), 분노 5 생성. [광기]: 공격력 5% 증가, 받는 피해 5% 증가'
+    mechanic: '특수액션 돌진: 피격 시 [광기] 획득(최대 10중첩), 분노 10 생성. [광기]: 공격력 5% 증가, 받는 피해 5% 증가'
     basicAttack:
       name: 기본 공격
       description: 좌우 도끼를 번갈아 휘두르는 3연타 공격입니다.
@@ -806,8 +806,8 @@ weapons:
           designIntent: 양손 동시 공격. 캔슬이 늦어 3타를 끝까지 칠 것인지 말 것인지 리스크를 줌
     specialAction:
       name: 돌진
-      description: 짧은 거리를 돌진하여 도끼를 내려찍어 피해. 강인도 보정. 피격 시 [광기] 획득(공격력 3% 증가, 받는 피해량 3% 증가, 최대 10중첩), 분노 5 생성.
-      mechanic: '피격 시 [광기] 획득, 분노 5 생성. [광기] 효과: 공격력 5% 증가, 받는 피해 5% 증가'
+      description: 짧은 거리를 돌진하여 도끼를 내려찍어 피해. 강인도 보정. 피격 시 [광기] 획득(공격력 3% 증가, 받는 피해량 3% 증가, 최대 10중첩), 분노 10 생성.
+      mechanic: '피격 시 [광기] 획득, 분노 10 생성. [광기] 효과: 공격력 5% 증가, 받는 피해 5% 증가'
       designIntent: '피격 시 [광기]를 쌓는 접근기, 의도적으로 적의 공격 타이밍에 달려들어 공격을 맞음'
     movementAttackSteps:
       - step: 1
