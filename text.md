@@ -1736,7 +1736,7 @@ passives:
     name: 치명적인 도살
     summary: 치명타 순환
     description: 치명타 발생 시 스태미나·분노 8% 회복, 25% 확률로 [광기] 1 추가 획득
-    designerIntent: 치명타 발생 -> 자원·광기 수급으로 콤보 순환 유도
+    designerIntent: 치명타 발생 -> 자원·[광기] 수급으로 콤보 순환 유도
   DA-T4-A1:
     name: 불안정한 광기
     summary: 전량 소모 폭주
@@ -1783,7 +1783,7 @@ passives:
     name: 피의 광기
     summary: 추가 필요
     description: 생명력이 50% 이하일 때 돌진 중 피격 시 [광기] 1회 추가 획득
-    designerIntent: 생명력이 낮을 때 돌진 피격으로 광기를 더 쌓게 유도
+    designerIntent: 생명력이 낮을 때 돌진 피격으로 [광기]를 더 쌓게 유도
   DA-T3-A2:
     name: 살인 돌격
     summary: 추가 필요
@@ -1798,7 +1798,7 @@ passives:
     name: 광기의 숨
     summary: 추가 필요
     description: 일반공격 3콤보 적중 시 [광기] 1스택 소모하여 스태미나 35% 즉시 회복
-    designerIntent: 평타 3콤보에 광기 1스택을 태워 스태미나를 돌려받는 콤보 유지 유도
+    designerIntent: 평타 3콤보에 [광기] 1스택을 태워 스태미나를 돌려받는 콤보 유지 유도
   DA-T3-AS1:
     name: 분노의 돌진
     summary: 추가 필요
@@ -1808,12 +1808,12 @@ passives:
     name: 집착의 광기
     summary: 추가 필요
     description: 같은 적에게 공격 적중 시마다 35% 확률로 [광기] 획득
-    designerIntent: 같은 적을 계속 때릴수록 광기 수급 유도
+    designerIntent: 같은 적을 계속 때릴수록 [광기] 수급 유도
   DA-T3-BS1:
     name: 혈막
     summary: 추가 필요
     description: 특수액션 사용 중 [광기] 스택의 받는 피해 증가 패널티를 60% 상쇄
-    designerIntent: 특수액션 중 광기 피격 패널티를 줄여 돌진으로 리스크를 상쇄하게 함
+    designerIntent: 특수액션 중 [광기] 피격 패널티를 줄여 돌진으로 리스크를 상쇄하게 함
   DA-T3-BS2:
     name: 분노의 광기
     summary: 추가 필요
@@ -1823,7 +1823,7 @@ passives:
     name: 피의 분노
     summary: 추가 필요
     description: 생명력이 50% 이하일 때 5초간 매 타격마다 분노 6 생성
-    designerIntent: '생명력이 낮을 때 타격마다 분노를 수급해 투신 하이 리스크 하이 리턴을 향한 발판 마련 '
+    designerIntent: '생명력이 낮을 때 타격마다 분노를 수급해 [투신] 하이 리스크 하이 리턴을 향한 발판 마련 '
   DA-T2-A2:
     name: 광격
     summary: 추가 필요
@@ -1838,12 +1838,12 @@ passives:
     name: 광기의 고통
     summary: 추가 필요
     description: 공격 중 피격 시 [광기] 1스택 획득 (내부 쿨타임 4초)
-    designerIntent: 공격 중 피격 시 광기를 쌓아, 맞으면서 때리는 운영 유도
+    designerIntent: 공격 중 피격 시 [광기]를 쌓아, 맞으면서 때리는 운영 유도
   DA-T2-AS1:
     name: 달려드는 자
     summary: 피격 광기
     description: 피격으로 [광기] 획득 시 5초간 경직 저항 수치 25% 증가
-    designerIntent: 피격으로 광기를 얻을 때 경직 저항을 주어 돌진 피격을 유도
+    designerIntent: 피격으로 [광기]를 얻을 때 경직 저항을 주어 돌진 피격을 유도
   DA-T2-AS2:
     name: 광기의 잔숨
     summary: 추가 필요
