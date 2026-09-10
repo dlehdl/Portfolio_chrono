@@ -983,7 +983,7 @@ weapons:
             nodes:
               - tier: 1
                 name: 추가 필요
-                description: 3콤보 스킬로 사용 가능. 70%·85%·115% 피해
+                description: 3체인 스킬로 사용 가능. 70%·85%·115% 피해
                 insight: 3콤보로 연계 구간 확대
                 resource: 분노 22
               - tier: 2
