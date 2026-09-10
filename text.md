@@ -1256,7 +1256,7 @@ weapons:
           - 폭발적 위력·무력화에 집중
         furyTrigger: 경직된 적 상대로 분노 수급 효율 증가
         furyEffect: 빠른 수급 후 가속 소용돌이로 즉시 소모
-        furyRisk: 순환이 끊기면 위력 40% 감소
+        furyRisk: 순환이 끊기면 위력 감소
       B-1:
         name: 응징
         concept: 피격 환원
@@ -1433,7 +1433,7 @@ weapons:
                 resource: 분노 38
               - tier: 2
                 name: 압도적인 힘
-                description: 적중 시 후속타 연계 가능. 후속타 적중 시 적 무력화 게이지 35% 감소
+                description: 적중 시 후속타 연계 가능. 후속타 적중 시 적 무력화 저항력 35% 감소
                 insight: 후속타 무력화 깎기로 다음 순환을 유도
                 resource: 분노 38
       BA_05:
