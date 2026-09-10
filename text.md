@@ -1560,7 +1560,7 @@ weapons:
               - tier: 2
                 name: 추가 필요
                 description: 풀차징 공격의 공격 속도 22% 증가
-                insight: '풀차징 공속으로 맞을 필요 없이 일격에 마무리 '
+                insight: '풀차징 공속 증가로 일격에 마무리 '
                 resource: 분노 48
           pathB:
             name: 'Type B-2: 파쇄'
@@ -1932,7 +1932,7 @@ passives:
   BA-T3-B1:
     name: '버티는 힘 '
     summary: 추가 필요
-    description: 충전 중 피격 시마다 분노 12% 회복. 충전 1초당 분노 생성량 10% 증가
+    description: 충전 중 피격 시마다 분노 8 회복. 충전 1초당 분노 생성량 10% 증가
     designerIntent: 충전 시간을 수급 수단으로 만들어 맞아 주는 선택을 유도
   BA-T3-B2:
     name: 유지되는 분노
