@@ -1473,7 +1473,7 @@ weapons:
                 resource: 분노 14
       BA_06:
         name: 피의 장막
-        baseDescription: 8초간 피격 시 피해 유예
+        baseDescription: 15초간 피격 시 피해 유예
         resource: 분노 28
         designIntent: 유예 버프기
         meaningfulChoice: 피격 횟수를 공업·폭발로 바꿀 것인가(응징) vs 유예 창의 수급·CC 해제를 살 것인가(파쇄)
