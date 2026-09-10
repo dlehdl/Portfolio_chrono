@@ -1748,7 +1748,7 @@ passives:
     summary: 회피 충전
     description: >-
       [광기] 상태에서 회피 공격을 충전해서 사용 가능. 충전 완료 시 회피 공격 돌진 거리 40% 증가
-    designerIntent: '[광기] 유지 중 평타 경직을 키우고, 충전 회피로 거리를 다시 잡게 함'
+    designerIntent: '[광기] 유지 중 충전 회피로 거리를 다시 좁히게 함'
   DA-T4-B1:
     name: '혈공 '
     summary: 추가 필요
