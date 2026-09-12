@@ -1753,7 +1753,7 @@ passives:
     name: '혈공 '
     summary: 추가 필요
     description: '[광기] 상태에서 특수액션 돌진의 후속타 연계 가능. 후속타는 공중에서 도끼를 내리찍어 210% 피해'
-    designerIntent: 특수액션 돌진 후 후속타를 넣어 회피-돌진 연계 유도
+    designerIntent: '[광기] 상태에서 특수액션 돌진의 후속타 연계로 돌진 사용에 메리트를 줌'
   DA-T4-B2:
     name: 연쇄 도살
     summary: 추가 필요
