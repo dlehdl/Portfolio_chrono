@@ -1968,7 +1968,7 @@ passives:
     name: 일격의 숨
     summary: 스태미나 회복
     description: 액티브 스킬 사용 후 5초간 초당 스태미나 8% 회복
-    designerIntent: '액티브 스킬 후 스태미나를 채워 다음 공격 순환이 일어나도록 함 '
+    designerIntent: '액티브 스킬 후 스태미나를 채워 특수액션 돌진 사용으로 분노 수급을 위한 발판 마련'
   BA-T2-B1:
     name: 철갑
     summary: 추가 필요
