@@ -1350,7 +1350,7 @@ weapons:
               - tier: 2
                 name: 추가 필요
                 description: 선딜 동작에 타격 추가, 95% 피해. 사용 중 피격 시 분노 14 회복
-                insight: 선딜 타격과 피격 분노 회복으로 맞으면서 분노 수급
+                insight: 선딜 타격 추가와 피격 시 분노 리턴
                 resource: 분노 32
           pathB:
             name: 'Type A-2: 분쇄'
