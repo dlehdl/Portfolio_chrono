@@ -1666,7 +1666,7 @@ passives:
     name: 절제된 광기
     summary: 추가 필요
     description: 액티브 스킬 분노 소모량 15% 감소
-    designerIntent: '분노 수급을 용이하게 해주는 패시브 '
+    designerIntent: '분노 유지를 용이하게 해주는 패시브 '
   CS-T3-BS1:
     name: 불굴 난무
     summary: 추가 필요
