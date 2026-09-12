@@ -1003,7 +1003,7 @@ weapons:
               - tier: 2
                 name: 추가 필요
                 description: '적중 시 [광기] 1회 획득'
-                insight: 광기 상태에서 피해와 스택을 동시에 늘려 유지 보상
+                insight: 광기 스택 유지에 도움
                 resource: 분노 14
       DA_04:
         name: 투신
@@ -1038,7 +1038,7 @@ weapons:
               - tier: 2
                 name: 추가 필요
                 description: '[투신] 상태에서 스태미나 회복량 40% 증가. 기본 공격 속도 20% 증가'
-                insight: 투신 중 스태미나와 공속을 키워 유지력 강화
+                insight: 투신 중 스태미나와 공속을 키워 기본 공격 사용이 용이하게 함
                 resource: 분노 40
       DA_05:
         name: 쪼개기
