@@ -1398,7 +1398,7 @@ weapons:
                 resource: 분노 +22
               - tier: 2
                 name: 추가 필요
-                description: 후속타 적중 시 적 [다운]. 가드 성공 시 분노 25 생성
+                description: 후속타 적중 시 적 [다운]. [가드] 성공 시 분노 25 생성
                 insight: '후속타 다운으로 경직 발판 마련 '
                 resource: 분노 +25
       BA_04:
