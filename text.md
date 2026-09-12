@@ -1758,7 +1758,7 @@ passives:
     name: 연쇄 도살
     summary: 추가 필요
     description: 연계 공격 사용마다 치명타 피해 6% 증가 (최대 10중첩). 단, 스킬 분노 소모량 12% 증가
-    designerIntent: 체인 적중이 쌓일수록 치명타 피해가 커져 콤보 유지 유도
+    designerIntent: 연계 공격 적중이 쌓일수록 치명타 피해가 커져 콤보 유지 유도
   DA-T4-AS1:
     name: 끓어오르는 일격
     summary: 추가 필요
